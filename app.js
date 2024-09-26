@@ -31,25 +31,33 @@ import coupons from './routes/couponRoutes.js'
 import subscriber from './routes/subscriberRoutes.js'
 import notification from './routes/notificationRoutes.js'
 import AppError from './utils/appError.js'
+import { searchProducts } from './controllers/productController.js'
+import { cleanCache } from './controllers/handleFactory.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const app = express()
 
-// app.use(cors({
-//   origin: ['http://localhost:5173','http://localhost:5174',
-//      'https://baaazaaradmin.ecommercebaazaar.com/',
-//      'https://ecommercebaazaar.com/'],
-//   credentials: true,
-// }));
-
 app.use(
     cors({
-        origin: '*',
+        origin: [
+            'http://localhost:5173',
+            'http://localhost:5174',
+            'http://localhost:5175',
+            'https://ecomuserpanel.lighthouseclouds.com/',
+            'https://ecommercebaazaar.com/',
+        ],
         credentials: true,
     })
 )
+
+// app.use(
+//     cors({
+//         origin: '*',
+//         credentials: true,
+//     })
+// )
 // Global input sanitization middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -61,18 +69,6 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
 
-// Rate limit rule
-// const limiter = rateLimit({
-//     windowMs: 15 * 60 * 1000, // 15 minutes
-//     max: 100, // limit each IP to 100 requests per windowMs
-//     message: 'Too many requests from this IP, please try again later.',
-//     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-//     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-// })
-
-// Use rate limiting rule to all requests
-// app.use(limiter)
-
 app.get('/', (req, res, next) => {
     res.send('Ecommerce Bazaar API is Running')
     next()
@@ -81,6 +77,10 @@ app.get('/', (req, res, next) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // API ROUTES
+app.post('/clean-cache', cleanCache)
+
+app.get('/api/search', searchProducts)
+
 app.use('/api/users', userRoutes)
 app.use('/api/vendors', vendorRoutes)
 app.use('/api/customers', customerRoutes)

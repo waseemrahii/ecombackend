@@ -5,6 +5,7 @@ import {
     getUser,
     getUsers,
     updateUser,
+    updateRole,
 } from './../controllers/userController.js'
 import {
     login,
@@ -28,6 +29,7 @@ router.post('/register', signup)
 router.post('/logout', protect, logout)
 
 router.put('/update-password', protect, selectModelByRole, updatePassword)
+router.put('/update-role', updateRole)
 
 router
     .route('/')
@@ -37,11 +39,11 @@ router
         // validateSchema(userValidationSchema),
         createUser
     )
-    .get(protect, restrictTo('admin'), getUsers)
+    .get(getUsers)
 
 router
     .route('/:id')
-    .get(protect, getUser)
+    .get(getUser)
     .delete(protect, restrictTo('admin'), deleteUser)
     .put(protect, updateUser)
 

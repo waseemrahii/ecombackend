@@ -127,6 +127,14 @@ export const createOne = (Model) =>
             return next(new AppError(`${docName} could not be created`, 400))
         }
 
+        if (
+            Model.modelName === 'SubCategory' ||
+            Model.modelName === 'SubSubCategory'
+        ) {
+            const modelCache = getCacheKey('Category', '')
+            await redisClient.del(modelCache)
+        }
+
         const cacheKeyOne = getCacheKey(Model.modelName, doc?._id)
         await redisClient.setEx(cacheKeyOne, 3600, JSON.stringify(doc))
 
@@ -361,3 +369,15 @@ export const updateStatus = (Model) =>
             doc,
         })
     })
+
+export const cleanCache = catchAsync(async (req, res, next) => {
+    try {
+        await redisClient.flushAll()
+        res.status(200).json({
+            status: 'success',
+            message: 'Redis cache cleaned.',
+        })
+    } catch (err) {
+        return next(new AppError('Redis cache not cleaned', 400))
+    }
+})

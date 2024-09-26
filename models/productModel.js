@@ -120,6 +120,12 @@ const productSchema = new mongoose.Schema(
             required: true,
         },
         slug: String,
+        rating: {
+            type: Number,
+            required: [true, 'Please provide rating.'],
+            default: 0,
+            set: (val) => (Math.round(val * 10) / 10).toFixed(1),
+        },
         numOfReviews: {
             type: Number,
             required: [true, 'Number of reviews are required.'],
