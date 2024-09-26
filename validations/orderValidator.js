@@ -27,22 +27,7 @@ const orderValidationSchema = Joi.object({
         .messages({
             'any.required': 'Products are required',
         }),
-    orderStatus: Joi.string()
-        .valid(
-            'pending',
-            'confirmed',
-            'packaging',
-            'out_for_delivery',
-            'delivered',
-            'failed_to_deliver',
-            'returned',
-            'canceled'
-        )
-        .default('pending')
-        .messages({
-            'string.base': 'Order status must be a string',
-            'any.only': 'Invalid order status',
-        }),
+
     totalAmount: Joi.number().required().messages({
         'any.required': 'Total amount is required',
         'number.base': 'Total amount must be a number',
@@ -117,9 +102,6 @@ const orderValidationSchema = Joi.object({
         .messages({
             'any.required': 'Billing address is required',
         }),
-    orderNote: Joi.string().allow('').messages({
-        'string.base': 'Order note must be a string',
-    }),
 })
 
 export default orderValidationSchema
