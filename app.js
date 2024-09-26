@@ -47,7 +47,7 @@ app.use(
             'http://localhost:5175',
             'https://ebazaar-ten.vercel.app/',
             'https://ecomuserpanel.lighthouseclouds.com/',
-            'https://ecommercebaazaar.com/',
+            'https://ecocmadmin.vercel.app/',
         ],
         credentials: true,
     })
