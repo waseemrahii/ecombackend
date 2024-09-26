@@ -46,7 +46,7 @@ app.use(
             'http://localhost:5174',
             'http://localhost:5175',
             'https://ecomuserpanel.lighthouseclouds.com/',
-            'https://ecocmadmin.vercel.app/'',
+            'https://ecocmadmin.vercel.app/',
         ],
         credentials: true,
     })
