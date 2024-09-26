@@ -45,6 +45,7 @@ app.use(
             'http://localhost:5173',
             'http://localhost:5174',
             'http://localhost:5175',
+            'https://ebazaar-ten.vercel.app/',
             'https://ecomuserpanel.lighthouseclouds.com/',
             'https://ecommercebaazaar.com/',
         ],
