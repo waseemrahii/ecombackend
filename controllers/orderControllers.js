@@ -1,7 +1,9 @@
+import redisClient from '../config/redisConfig.js'
 import Coupon from '../models/couponModel.js'
 import Order from '../models/orderModel.js'
 import AppError from '../utils/appError.js'
 import catchAsync from '../utils/catchAsync.js'
+import { getCacheKey } from '../utils/helpers.js'
 import {
     createOne,
     deleteOne,
