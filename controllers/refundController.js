@@ -13,9 +13,9 @@ import AppError from '../utils/appError.js'
 
 // Create a new refund request
 export const createRefund = catchAsync(async (req, res, next) => {
-    const { reasonByCustomer, order } = req.body
+    const { reason, order } = req.body
 
-    const refund = await Refund.create({ order, reasonByCustomer })
+    const refund = await Refund.create({ order, reason })
 
     if (!refund) {
         return next(new AppError(`Refund could not be created`, 400))

@@ -18,9 +18,9 @@ const refundValidationSchema = Joi.object({
     reason: Joi.string().min(1).required().messages({
         'string.base': 'Reason must be a string.',
         'string.empty': 'Please provide a reason.',
-        'any.required': 'Reason is required.',
+        'any.required': 'Customer Reason is required.',
     }),
-    requestedAt: Joi.date().messages({
+    requestedAt: Joi.date().optional().messages({
         'date.base': 'Requested At must be a valid date.',
     }),
     processedAt: Joi.date().optional().allow(null).messages({
