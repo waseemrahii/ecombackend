@@ -38,6 +38,8 @@ const upload = multer({ storage })
 router
     .route('/')
     .post(
+        protect,
+        restrictTo('admin', 'vendor'),
         upload.fields([
             { name: 'thumbnail' },
             { name: 'images', maxCount: 10 },
@@ -53,19 +55,26 @@ router.route('/limited-product').get(getLimitedStockedProducts)
 
 router.route('/:productId/sold').get(sellProduct)
 
-router.put('/:productId/update-product-image', updateProductImages)
+router.put(
+    '/:productId/update-product-image',
+    protect,
+    restrictTo('admin', 'vendor'),
+    updateProductImages
+)
 
 router
     .route('/:id')
     .get(getProductById)
-    .put(updateProduct)
-    .delete(deleteProduct)
+    .put(protect, restrictTo('admin', 'vendor'), updateProduct)
+    .delete(protect, restrictTo('admin', 'vendor'), deleteProduct)
 
 router.put('/status/:id', protect, restrictTo('admin'), updateProductStatus)
 
 router.get('/slug/:slug', getProductBySlug)
 
-router.route('/:id/feature').put(updateProductFeaturedStatus)
+router
+    .route('/:id/feature')
+    .put(protect, restrictTo('admin', 'vendor'), updateProductFeaturedStatus)
 
 // router.get('/top-rated', getTopRatedProducts);
 // // router.get('/pending', getAllPendingProducts);

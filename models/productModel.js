@@ -54,7 +54,7 @@ const productSchema = new mongoose.Schema(
         },
         discount: {
             type: Number,
-            discount: 0,
+            default: 0,
         },
         discountType: {
             type: String,
@@ -83,6 +83,7 @@ const productSchema = new mongoose.Schema(
         stock: {
             type: Number,
             required: [true, 'Please provide Stock'],
+            default: 0,
         },
         isFeatured: {
             type: Boolean,

@@ -5,20 +5,20 @@ import {
     sendSuccessResponse,
 } from '../utils/responseHandler.js'
 import { validateProductDependencies } from '../utils/validation.js'
-import { populateProductDetails } from '../utils/productHelper.js'
-import { buildFilterQuery, buildSortOptions } from '../utils/filterHelper.js'
 import Customer from '../models/customerModel.js'
 import {
     deleteOne,
     getAll,
     getOne,
     getOneBySlug,
+    updateOne,
     updateStatus,
 } from './handleFactory.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getCacheKey } from '../utils/helpers.js'
 import redisClient from '../config/redisConfig.js'
 import slugify from 'slugify'
+import AppError from '../utils/appError.js'
 
 // Create a new product
 export const createProduct = catchAsync(async (req, res) => {
@@ -231,25 +231,42 @@ export const addReview = async (req, res) => {
 export const updateProductStatus = updateStatus(Product)
 
 // Update product featured status
-export const updateProductFeaturedStatus = async (req, res) => {
-    try {
-        const productId = req.params.id
+export const updateProductFeaturedStatus = catchAsync(
+    async (req, res, next) => {
         const { isFeatured } = req.body
 
-        const product = await Product.findById(productId)
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' })
+        // Perform the update operation
+        const doc = await Product.findByIdAndUpdate(
+            req.params.id,
+            { isFeatured },
+            {
+                new: true,
+                runValidators: true,
+            }
+        )
+
+        // Handle case where the document was not found
+        if (!doc) {
+            return next(new AppError(`No Product found with that ID`, 404))
         }
 
-        product.isFeatured = isFeatured
-        await product.save()
-        await client.del('all_products:*')
-        await client.del(`product_${productId}`)
-        sendSuccessResponse(res, product, 200)
-    } catch (error) {
-        sendErrorResponse(res, error)
+        const cacheKeyOne = getCacheKey('Product', req.params.id)
+
+        // delete pervious document data
+        await redisClient.del(cacheKeyOne)
+        // updated the cache with new data
+        await redisClient.setEx(cacheKeyOne, 3600, JSON.stringify(doc))
+
+        // Update cache
+        const cacheKey = getCacheKey('Product', '', req.query)
+        await redisClient.del(cacheKey)
+
+        res.status(200).json({
+            status: 'success',
+            doc,
+        })
     }
-}
+)
 
 // Get top-rated products
 export const getTopRatedProducts = async (req, res) => {
@@ -309,7 +326,6 @@ export const getLimitedStockedProducts = async (req, res) => {
 export const sellProduct = catchAsync(async (req, res) => {
     const productId = req.params.id
     const product = await Product.findById(productId)
-    re
     product.status = 'sold'
 
     res.status(200).json({
@@ -319,107 +335,7 @@ export const sellProduct = catchAsync(async (req, res) => {
 })
 
 // Update product details
-export const updateProduct = catchAsync(async (req, res) => {
-    const productId = req.params.id
-
-    const { error } = productValidationSchema.validate(req.body, {
-        abortEarly: false,
-    })
-    if (error) {
-        return res.status(400).json({
-            message: error.details.map((err) => err.message).join(', '),
-        })
-    }
-
-    const {
-        name,
-        description,
-        category,
-        subCategorySlug,
-        subSubCategorySlug,
-        brand,
-        productType,
-        digitalProductType,
-        sku,
-        unit,
-        tags,
-        price,
-        discount,
-        discountType,
-        discountAmount,
-        taxAmount,
-        taxIncluded,
-        minimumOrderQty,
-        shippingCost,
-        stock,
-        isFeatured,
-        colors,
-        attributes,
-        size,
-        videoLink,
-        userId,
-        userType,
-    } = req.body
-
-    const {
-        categoryObj,
-        subCategoryObj,
-        subSubCategoryObj,
-        brandObj,
-        colorObjs,
-        attributeObjs,
-    } = await validateProductDependencies({
-        category,
-        subCategorySlug,
-        subSubCategorySlug,
-        brand,
-        colors,
-        attributes,
-    })
-
-    const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        {
-            name,
-            description,
-            category: categoryObj ? categoryObj._id : undefined,
-            subCategory: subCategoryObj ? subCategoryObj._id : undefined,
-            subSubCategory: subSubCategoryObj
-                ? subSubCategoryObj._id
-                : undefined,
-            brand: brandObj ? brandObj._id : undefined,
-            productType,
-            digitalProductType,
-            sku,
-            unit,
-            tags,
-            price,
-            discount,
-            discountType,
-            discountAmount,
-            taxAmount,
-            taxIncluded,
-            minimumOrderQty,
-            shippingCost,
-            stock,
-            isFeatured: isFeatured || false,
-            colors: colorObjs ? colorObjs.map((color) => color._id) : undefined,
-            attributes: attributeObjs
-                ? attributeObjs.map((attribute) => attribute._id)
-                : undefined,
-            size,
-            videoLink,
-            userId,
-            userType,
-            status: 'pending',
-        },
-        { new: true }
-    )
-
-    await client.del('all_products:*')
-    await client.del(`product_${productId}`)
-    sendSuccessResponse(res, updatedProduct, 200)
-})
+export const updateProduct = updateOne(Product)
 
 export const getProductBySlug = getOneBySlug(Product, { path: 'reviews' })
 
