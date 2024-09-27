@@ -1,5 +1,62 @@
 import Joi from 'joi'
 
+const addressSchema = Joi.object({
+    name: Joi.string().min(3).max(50).required().messages({
+        'any.required': 'Name is required.',
+        'string.base': 'Name must be a string.',
+        'string.empty': 'Name cannot be empty.',
+        'string.min': 'Name must be at least 3 characters long.',
+        'string.max': 'Name must be at most 50 characters long.',
+    }),
+    address: Joi.string().min(5).max(100).required().messages({
+        'any.required': 'Address is required.',
+        'string.base': 'Address must be a string.',
+        'string.empty': 'Address cannot be empty.',
+        'string.min': 'Address must be at least 5 characters long.',
+        'string.max': 'Address must be at most 100 characters long.',
+    }),
+    city: Joi.string().min(2).max(50).required().messages({
+        'any.required': 'City is required.',
+        'string.base': 'City must be a string.',
+        'string.empty': 'City cannot be empty.',
+        'string.min': 'City must be at least 2 characters long.',
+        'string.max': 'City must be at most 50 characters long.',
+    }),
+    state: Joi.string().min(2).max(50).required().messages({
+        'any.required': 'State is required.',
+        'string.base': 'State must be a string.',
+        'string.empty': 'State cannot be empty.',
+        'string.min': 'State must be at least 2 characters long.',
+        'string.max': 'State must be at most 50 characters long.',
+    }),
+    zipCode: Joi.string()
+        .pattern(/^[0-9]{5,10}$/)
+        .required()
+        .messages({
+            'any.required': 'Zip code is required.',
+            'string.base': 'Zip code must be a string.',
+            'string.empty': 'Zip code cannot be empty.',
+            'string.pattern.base': 'Zip code must be between 5 and 10 digits.',
+        }),
+    country: Joi.string().min(2).max(50).required().messages({
+        'any.required': 'Country is required.',
+        'string.base': 'Country must be a string.',
+        'string.empty': 'Country cannot be empty.',
+        'string.min': 'Country must be at least 2 characters long.',
+        'string.max': 'Country must be at most 50 characters long.',
+    }),
+    phoneNumber: Joi.string()
+        .pattern(/^[0-9]{7,15}$/)
+        .required()
+        .messages({
+            'any.required': 'Phone number is required.',
+            'string.base': 'Phone number must be a string.',
+            'string.empty': 'Phone number cannot be empty.',
+            'string.pattern.base':
+                'Phone number must be between 7 and 15 digits long.',
+        }),
+})
+
 const orderValidationSchema = Joi.object({
     customer: Joi.string().required().messages({
         'any.required': 'Customer ID is required',
@@ -40,68 +97,12 @@ const orderValidationSchema = Joi.object({
             'string.base': 'Payment method must be a string',
             'any.only': 'Invalid payment method',
         }),
-    shippingAddress: Joi.object({
-        address: Joi.string().required().messages({
-            'any.required': 'Shipping address is required',
-            'string.base': 'Shipping address must be a string',
-            'string.empty': 'Shipping address cannot be empty',
-        }),
-        city: Joi.string().required().messages({
-            'any.required': 'Shipping city is required',
-            'string.base': 'Shipping city must be a string',
-            'string.empty': 'Shipping city cannot be empty',
-        }),
-        state: Joi.string().required().messages({
-            'any.required': 'Shipping state is required',
-            'string.base': 'Shipping state must be a string',
-            'string.empty': 'Shipping state cannot be empty',
-        }),
-        zipCode: Joi.string().required().messages({
-            'any.required': 'Shipping zip code is required',
-            'string.base': 'Shipping zip code must be a string',
-            'string.empty': 'Shipping zip code cannot be empty',
-        }),
-        country: Joi.string().required().messages({
-            'any.required': 'Shipping country is required',
-            'string.base': 'Shipping country must be a string',
-            'string.empty': 'Shipping country cannot be empty',
-        }),
-    })
-        .required()
-        .messages({
-            'any.required': 'Shipping address is required',
-        }),
-    billingAddress: Joi.object({
-        address: Joi.string().required().messages({
-            'any.required': 'Billing address is required',
-            'string.base': 'Billing address must be a string',
-            'string.empty': 'Billing address cannot be empty',
-        }),
-        city: Joi.string().required().messages({
-            'any.required': 'Billing city is required',
-            'string.base': 'Billing city must be a string',
-            'string.empty': 'Billing city cannot be empty',
-        }),
-        state: Joi.string().required().messages({
-            'any.required': 'Billing state is required',
-            'string.base': 'Billing state must be a string',
-            'string.empty': 'Billing state cannot be empty',
-        }),
-        zipCode: Joi.string().required().messages({
-            'any.required': 'Billing zip code is required',
-            'string.base': 'Billing zip code must be a string',
-            'string.empty': 'Billing zip code cannot be empty',
-        }),
-        country: Joi.string().required().messages({
-            'any.required': 'Billing country is required',
-            'string.base': 'Billing country must be a string',
-            'string.empty': 'Billing country cannot be empty',
-        }),
-    })
-        .required()
-        .messages({
-            'any.required': 'Billing address is required',
-        }),
+    shippingAddress: addressSchema.required().messages({
+        'any.required': 'Shipping address is required.',
+    }),
+    billingAddress: addressSchema.required().messages({
+        'any.required': 'Billing address is required.',
+    }),
 })
 
 export default orderValidationSchema

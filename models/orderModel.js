@@ -53,21 +53,25 @@ const orderSchema = new mongoose.Schema(
         },
         shippingAddress: {
             type: {
+                name: String,
                 address: String,
                 city: String,
                 state: String,
                 zipCode: String,
                 country: String,
+                phoneNumber: String,
             },
             required: [true, 'Please provide shipping address.'],
         },
         billingAddress: {
             type: {
+                name: String,
                 address: String,
                 city: String,
                 state: String,
                 zipCode: String,
                 country: String,
+                phoneNumber: String,
             },
             required: [true, 'Please provide billing address.'],
         },
