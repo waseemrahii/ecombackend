@@ -25,6 +25,7 @@ const wishlistSchema = new mongoose.Schema(
     }
 )
 
+// Virtual field for vendor bank (if needed)
 wishlistSchema.virtual('vendorBank', {
     ref: 'VendorBank',
     localField: '_id',
@@ -37,22 +38,23 @@ wishlistSchema.pre('save', function (next) {
     next()
 })
 
+// Pre-find hook to populate products and customer (remove .lean())
 wishlistSchema.pre(/^find/, function (next) {
     this.populate({
         path: 'products',
         select: '-__v -createdAt -updatedAt',
+    }).populate({
+        path: 'customer', // Corrected from 'user' to 'customer'
+        select: '-__v -createdAt -updatedAt -role -status -referCode',
     })
-        .populate({
-            path: 'user',
-            select: '-__v -createdAt -updatedAt -role -status -referCode',
-        })
-        .lean()
 
     next()
 })
 
+// Pre-save hook to validate customer and products
 wishlistSchema.pre('save', async function (next) {
     try {
+        // Check if customer exists
         const customer = await mongoose
             .model('Customer')
             .findById(this.customer)
@@ -63,7 +65,7 @@ wishlistSchema.pre('save', async function (next) {
             )
         }
 
-        // Check if products are provided and validate them
+        // Check if products exist and validate them
         if (this.products && this.products.length > 0) {
             const productCheck = await mongoose
                 .model('Product')
