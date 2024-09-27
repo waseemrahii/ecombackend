@@ -69,7 +69,7 @@ export const updateOne = (Model) =>
         let { allowedFields, filteredData } = checkFields(Model, req, next)
 
         // if document contain slug then create a slug
-        if (allowedFields.includes('slug')) {
+        if (allowedFields.includes('slug') && req.body.slug) {
             filteredData = {
                 ...filteredData,
                 slug: slugify(filteredData.name, { lower: true }),
