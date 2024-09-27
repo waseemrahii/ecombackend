@@ -45,16 +45,11 @@ const addressSchema = Joi.object({
         'string.min': 'Country must be at least 2 characters long.',
         'string.max': 'Country must be at most 50 characters long.',
     }),
-    phoneNumber: Joi.string()
-        .pattern(/^[0-9]{7,15}$/)
-        .required()
-        .messages({
-            'any.required': 'Phone number is required.',
-            'string.base': 'Phone number must be a string.',
-            'string.empty': 'Phone number cannot be empty.',
-            'string.pattern.base':
-                'Phone number must be between 7 and 15 digits long.',
-        }),
+    phoneNumber: Joi.string().required().messages({
+        'any.required': 'Phone number is required.',
+        'string.base': 'Phone number must be a string.',
+        'string.empty': 'Phone number cannot be empty.',
+    }),
 })
 
 const orderValidationSchema = Joi.object({
