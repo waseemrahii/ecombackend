@@ -53,7 +53,7 @@ const addressSchema = Joi.object({
 })
 
 const orderValidationSchema = Joi.object({
-    customer: Joi.string().required().messages({
+    customerId: Joi.string().required().messages({
         'any.required': 'Customer ID is required',
         'string.base': 'Customer ID must be a string',
     }),
