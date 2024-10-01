@@ -15376,3 +15376,45 @@ Use mongoose.model(name, schema)
     at next (F:\Side Projects\bazaar-backend\node_modules\express\lib\router\route.js:149:13)
     at file:///F:/Side%20Projects/bazaar-backend/middleware/authMiddleware.js:99:5
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T11:10:19.931Z [error]: Error: Can't find this /api/products on this server.
+    at file:///F:/Light%20House%20Digital/ecombackend/app.js:115:9
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at Route.dispatch (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:119:3)
+2024-10-01T11:10:22.386Z [error]: Error: Can't find this /api/products on this server.
+    at file:///F:/Light%20House%20Digital/ecombackend/app.js:115:9
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at Route.dispatch (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:119:3)
+2024-10-01T11:13:50.257Z [error]: Error: You are not logged in! Please log in to get access.
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:45:13
+    at file:///F:/Light%20House%20Digital/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at F:\Light House Digital\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (F:\Light House Digital\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (F:\Light House Digital\ecombackend\node_modules\express\lib\router\index.js:175:3)
+2024-10-01T11:13:57.855Z [error]: Error: Unfortunately, this token has already expired.
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:62:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T11:20:42.339Z [error]: ReferenceError: cahceddoc is not defined
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/handleFactory.js:201:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T11:21:35.057Z [error]: TypeError: Cannot read properties of null (reading 'length')
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/handleFactory.js:202:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import FeaturedDeal from '../models/featuredDealModel.js'
 import Product from '../models/productModel.js'
 import catchAsync from '../utils/catchAsync.js'
@@ -12,7 +13,6 @@ import {
 import { getCacheKey } from '../utils/helpers.js'
 import redisClient from '../config/redisConfig.js'
 import AppError from '../utils/appError.js'
-import mongoose from 'mongoose'
 
 // Create Feature Deal
 export const createFeaturedDeal = createOne(FeaturedDeal)
@@ -29,15 +29,11 @@ export const addProductToFeaturedDeal = catchAsync(async (req, res, next) => {
     const { id } = req.params
     const { productId } = req.body
 
-    console.log(productId)
-
     // Check if the product exists
     const product = await Product.findById(productId)
     if (!product) {
         return next(new AppError('Product not found', 404))
     }
-
-    console.log(product)
 
     const featuredDeal = await FeaturedDeal.findById(id)
     console.log(featuredDeal)

@@ -25,7 +25,7 @@ import subscriber from './subscriberRoutes.js'
 import notification from './notificationRoutes.js'
 import searchRoutes from './searchRoutes.js'
 
-const router = express()
+const router = express.Router()
 
 router.use('/users', userRoutes)
 router.use('/vendors', vendorRoutes)

@@ -189,13 +189,17 @@ export const getOne = (Model, popOptions) =>
 // GET All Documents
 export const getAll = (Model, popOptions) =>
     catchAsync(async (req, res, next) => {
-        console.log('GET ALL')
+        console.log('GET ALL', Model)
 
         const cacheKey = getCacheKey(Model.modelName, '', req.query)
 
+        console.log(cacheKey)
+
         // Check cache first
         const cacheddoc = await redisClient.get(cacheKey)
-        if (cacheddoc) {
+
+        if (cacheddoc !== null) {
+            console.log('cached')
             return res.status(200).json({
                 status: 'success',
                 cached: true,
@@ -226,6 +230,8 @@ export const getAll = (Model, popOptions) =>
             .paginate()
 
         const doc = await features.query
+
+        console.log(doc)
 
         // Cache the result
         await redisClient.setEx(cacheKey, 3600, JSON.stringify(doc))
