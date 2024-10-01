@@ -4,6 +4,9 @@ import AppError from '../utils/appError.js'
 
 const orderSchema = new mongoose.Schema(
     {
+        orderId: {
+            type: Number,
+        },
         customer: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Customer',
@@ -53,25 +56,21 @@ const orderSchema = new mongoose.Schema(
         },
         shippingAddress: {
             type: {
-                name: String,
                 address: String,
                 city: String,
                 state: String,
                 zipCode: String,
                 country: String,
-                phoneNumber: String,
             },
             required: [true, 'Please provide shipping address.'],
         },
         billingAddress: {
             type: {
-                name: String,
                 address: String,
                 city: String,
                 state: String,
                 zipCode: String,
                 country: String,
-                phoneNumber: String,
             },
             required: [true, 'Please provide billing address.'],
         },

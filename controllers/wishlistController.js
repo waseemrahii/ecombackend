@@ -4,19 +4,29 @@ import Customer from '../models/customerModel.js'
 import { deleteOne, getAll, getOne } from './handleFactory.js'
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
-import { getCacheKey } from '../utils/helpers.js'
-import redisClient from '../config/redisConfig.js'
-import mongoose from 'mongoose'
 
 export const getAllWishlists = getAll(Wishlist)
 
 export const deleteWishlist = deleteOne(Wishlist)
 
-export const getWishlist = getOne(Wishlist)
+export const getWishlist = catchAsync(async (req, res, next) => {
+    const { customerId } = req.params
+
+    const wishlist = await Wishlist.findOne({ customer: customerId })
+
+    if (!wishlist) {
+        return next(new AppError('Customer not found.', 400))
+    }
+
+    res.status(200).json({
+        status: 'success',
+        doc: wishlist,
+    })
+})
 
 export const addProductToWishlist = catchAsync(async (req, res, next) => {
-    const { customer, productId } = req.body
-
+    const { customerId, productId } = req.body
+    const customer = customerId;
     const productExists = await Product.findById(productId)
     if (!productExists) {
         return next(new AppError('Product not found.', 400))
@@ -49,10 +59,10 @@ export const addProductToWishlist = catchAsync(async (req, res, next) => {
 
     await wishlist.save()
 
+    console.log(wishlist)
     res.status(200).json({
         status: 'success',
-        message: 'Product added to wishlist successfully.',
-        data: wishlist,
+        doc: wishlist,
     })
 })
 
@@ -81,10 +91,7 @@ export const removeProductFromWishlist = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: 'success',
-        message: 'Product removed from wishlist successfully.',
-        data: {
-            wishlist,
-            totalItems: wishlist.totalProducts,
-        },
+        totalProducts: wishlist.totalProducts,
+        doc: wishlist,
     })
 })

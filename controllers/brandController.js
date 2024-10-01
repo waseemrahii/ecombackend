@@ -6,7 +6,7 @@ import { getCacheKey } from '../utils/helpers.js'
 import { client } from '../utils/redisClient.js'
 import { sendSuccessResponse } from '../utils/responseHandler.js'
 import { deleteOne, getAll, getOne, getOneBySlug } from './handleFactory.js'
-
+  
 // Create a new brand
 export const createBrand = catchAsync(async (req, res) => {
     const { name, imageAltText } = req.body

@@ -54,7 +54,7 @@ const productSchema = new mongoose.Schema(
         },
         discount: {
             type: Number,
-            default: 0,
+            discount: 0,
         },
         discountType: {
             type: String,
@@ -64,7 +64,6 @@ const productSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-
         taxAmount: {
             type: Number,
             default: 0,
@@ -83,7 +82,6 @@ const productSchema = new mongoose.Schema(
         stock: {
             type: Number,
             required: [true, 'Please provide Stock'],
-            default: 0,
         },
         isFeatured: {
             type: Boolean,
@@ -188,6 +186,13 @@ productSchema.virtual('reviews', {
     ref: 'ProductReview',
     localField: '_id',
     foreignField: 'product',
+})
+
+productSchema.virtual('totalOrders', {
+    ref: 'Order',
+    localField: '_id',
+    foreignField: 'products',
+    count: true,
 })
 
 productSchema.pre(/^find/, function (next) {

@@ -34,15 +34,15 @@ const productReviewSchema = new mongoose.Schema(
     { timestamps: true }
 )
 
-// productReviewSchema.pre(/^find/, function (next) {
-//     this.populate({
-//         path: 'customer',
-//         select: '-__v -createdAt -updatedAt -role -status -referCode',
-//     }).populate({
-//         path: 'product',
-//         select: '-__v -createdAt -updatedAt',
-//     })
-// })
+productReviewSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'customer',
+        select: '-__v -createdAt -updatedAt -role -status -referCode',
+    }).populate({
+        path: 'product',
+        select: '-__v -createdAt -updatedAt',
+    })
+})
 
 productReviewSchema.pre('save', async function (next) {
     const customer = await mongoose.model('Customer').findById(this.customer)

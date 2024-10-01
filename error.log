@@ -15294,3 +15294,85 @@ Use mongoose.model(name, schema)
 2024-09-26T07:22:40.617Z [error]: Can't find this /feature-deals on this server.
 2024-09-26T07:22:40.851Z [error]: Wishlist not found by that ID.
 2024-09-26T07:23:31.829Z [error]: Wishlist not found by that ID.
+2024-09-30T05:49:25.353Z [error]: Unfortunately, this token has already expired.
+2024-09-30T05:49:26.401Z [error]: Unfortunately, this token has already expired.
+2024-09-30T05:49:33.018Z [error]: Unfortunately, this token has already expired.
+2024-09-30T05:49:40.379Z [error]: Unfortunately, this token has already expired.
+2024-09-30T05:49:53.804Z [error]: Unfortunately, this token has already expired.
+2024-09-30T05:50:49.172Z [error]: Can't find this /feature-deals on this server.
+2024-09-30T05:50:49.408Z [error]: No wishlist found with that ID
+2024-09-30T05:51:16.438Z [error]: Customer not found.
+2024-09-30T05:52:47.808Z [error]: No wishlist found with that ID
+2024-09-30T05:52:50.554Z [error]: Customer not found.
+2024-09-30T05:54:24.712Z [error]: No wishlist found with that ID
+2024-09-30T05:54:26.400Z [error]: Customer ID is required
+2024-09-30T05:55:18.355Z [error]: Customer ID is required
+2024-09-30T05:55:37.711Z [error]: Unfortunately, this token has already expired.
+2024-09-30T05:55:40.317Z [error]: Unfortunately, this token has already expired.
+2024-09-30T05:55:52.260Z [error]: Unfortunately, this token has already expired.
+2024-09-30T05:56:23.548Z [error]: Can't find this /feature-deals on this server.
+2024-09-30T05:56:23.603Z [error]: No wishlist found with that ID
+2024-09-30T05:56:33.394Z [error]: Customer ID is required
+2024-09-30T05:57:35.979Z [error]: No wishlist found with that ID
+2024-09-30T05:57:39.891Z [error]: Customer not found.
+2024-09-30T05:58:14.287Z [error]: No wishlist found with that ID
+2024-09-30T05:58:29.498Z [error]: No wishlist found with that ID
+2024-09-30T06:02:02.564Z [error]: No wishlist found with that ID
+2024-09-30T06:02:13.309Z [error]: No wishlist found with that ID
+2024-09-30T06:02:23.488Z [error]: You do not have permission to perform this action.
+2024-09-30T06:34:49.532Z [error]: No wishlist found with that ID
+2024-09-30T06:34:56.142Z [error]: No wishlist found with that ID
+2024-09-30T06:34:59.740Z [error]: No wishlist found with that ID
+2024-09-30T06:41:16.637Z [error]: Customer not found.
+2024-09-30T06:41:17.378Z [error]: Customer not found.
+2024-10-01T06:45:05.750Z [error]: No featureddeal found with that ID
+2024-10-01T06:47:10.704Z [error]: Cannot read properties of undefined (reading 'length')
+2024-10-01T06:52:33.461Z [error]: AppError is not defined
+2024-10-01T06:56:42.077Z [error]: AppError is not defined
+2024-10-01T06:57:56.878Z [error]: AppError is not defined
+2024-10-01T07:02:11.550Z [error]: Unfortunately, this token has already expired.
+2024-10-01T07:03:44.042Z [error]: AppError is not defined
+2024-10-01T07:04:51.903Z [error]: AppError is not defined
+2024-10-01T07:05:22.527Z [error]: AppError is not defined
+2024-10-01T07:06:21.915Z [error]: AppError is not defined
+2024-10-01T07:07:26.079Z [error]: AppError is not defined
+2024-10-01T07:08:56.847Z [error]: AppError is not defined
+2024-10-01T07:09:48.396Z [error]: No product found with that ID
+2024-10-01T07:10:08.588Z [error]: No product found with that ID
+2024-10-01T07:11:00.623Z [error]: AppError is not defined
+2024-10-01T07:11:52.777Z [error]: AppError is not defined
+2024-10-01T07:13:10.311Z [error]: AppError is not defined
+2024-10-01T07:14:24.455Z [error]: AppError is not defined
+2024-10-01T07:15:39.224Z [error]: ReferenceError: AppError is not defined
+    at model.<anonymous> (file:///F:/Side%20Projects/bazaar-backend/models/featuredDealModel.js:49:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T07:16:27.950Z [error]: Error: One or more products do not exist.
+    at model.<anonymous> (file:///F:/Side%20Projects/bazaar-backend/models/featuredDealModel.js:50:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T07:19:39.862Z [error]: Error: One or more products do not exist.
+    at model.<anonymous> (file:///F:/Side%20Projects/bazaar-backend/models/featuredDealModel.js:50:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T07:19:45.685Z [error]: Error: One or more products do not exist.
+    at model.<anonymous> (file:///F:/Side%20Projects/bazaar-backend/models/featuredDealModel.js:50:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T07:22:41.585Z [error]: Error: Product not found
+    at file:///F:/Side%20Projects/bazaar-backend/controllers/featuredDealController.js:76:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T07:23:15.764Z [error]: Error: Product not found in Feature Deal
+    at file:///F:/Side%20Projects/bazaar-backend/controllers/featuredDealController.js:84:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T07:25:08.163Z [error]: Error: Product not found in Feature Deal
+    at file:///F:/Side%20Projects/bazaar-backend/controllers/featuredDealController.js:87:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T07:36:19.639Z [error]: ReferenceError: mongoose is not defined
+    at file:///F:/Side%20Projects/bazaar-backend/controllers/featuredDealController.js:84:33
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T08:16:20.393Z [error]: Error: Referenced customer ID does not exist
+    at model.<anonymous> (file:///F:/Side%20Projects/bazaar-backend/models/productReviewModel.js:51:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-01T10:11:05.575Z [error]: Error: You do not have permission to perform this action.
+    at file:///F:/Side%20Projects/bazaar-backend/middleware/authMiddleware.js:109:17
+    at Layer.handle [as handle_request] (F:\Side Projects\bazaar-backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Side Projects\bazaar-backend\node_modules\express\lib\router\route.js:149:13)
+    at file:///F:/Side%20Projects/bazaar-backend/middleware/authMiddleware.js:99:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

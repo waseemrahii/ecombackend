@@ -69,7 +69,7 @@ export const updateOne = (Model) =>
         let { allowedFields, filteredData } = checkFields(Model, req, next)
 
         // if document contain slug then create a slug
-        if (allowedFields.includes('slug') && filteredData.name) {
+        if (allowedFields.includes('slug')) {
             filteredData = {
                 ...filteredData,
                 slug: slugify(filteredData.name, { lower: true }),
@@ -333,8 +333,6 @@ export const updateStatus = (Model) =>
         if (!req.body.status) {
             return next(new AppError(`Please provide status value.`, 400))
         }
-
-        console.log('Status: ', req.body.status)
 
         // Perform the update operation
         const doc = await Model.findByIdAndUpdate(

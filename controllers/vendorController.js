@@ -1,13 +1,10 @@
 import Vendor from '../models/vendorModel.js'
-import { client } from '../utils/redisClient.js'
 import {
     sendSuccessResponse,
     sendErrorResponse,
 } from '../utils/responseHandler.js'
 
-import jwt from 'jsonwebtoken'
 import {
-    deleteOne,
     deleteOneWithTransaction,
     getAll,
     getOne,

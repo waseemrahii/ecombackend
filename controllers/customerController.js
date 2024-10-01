@@ -17,9 +17,27 @@ export const getCustomer = getOne(Customer)
 export const deleteCustomer = deleteOne(Customer)
 
 export const updateCustomer = catchAsync(async (req, res, next) => {
-    const { firstName, lastName, email, phoneNumber, status } = req.body
+    const {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        status,
+        permanentAddress,
+        officeShippingAddress,
+        officeBillingAddress,
+    } = req.body
 
-    const data = { firstName, lastName, email, phoneNumber, status }
+    const data = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        status,
+        permanentAddress,
+        officeShippingAddress,
+        officeBillingAddress,
+    }
 
     // Perform the update operation
     const customer = await Customer.findByIdAndUpdate(req.params.id, data, {
