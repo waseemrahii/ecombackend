@@ -18,29 +18,31 @@ const __dirname = dirname(__filename)
 
 const app = express()
 
-app.use(
-    cors({
-        origin: [
-            'http://localhost:5173',
-            'http://localhost:5174',
-            'http://localhost:5175',
-            'https://ecomuserpanel.lighthouseclouds.com/',
-            'https://ecommercebaazaar.com/',
-            'https://ebazaar-ten.vercel.app/',
-            'https://ecocmadmin.vercel.app/',
-            'https://vistamart.vercel.app/',
-        ],
-        methods: 'GET,POST,PUT,DELETE',
-        credentials: true,
-    })
-)
-
 // app.use(
 //     cors({
-//         origin: '*',
+//         origin: [
+//             'http://localhost:5173',
+//             'http://localhost:5174',
+//             'http://localhost:5175',
+//             'https://ecomuserpanel.lighthouseclouds.com/',
+//             'https://ecommercebaazaar.com/',
+//             'https://ebazaar-ten.vercel.app/',
+//             'https://ecocmadmin.vercel.app/',
+//             'https://vistamart.vercel.app/',
+//         ],
+//         methods: 'GET,POST,PUT,DELETE',
 //         credentials: true,
 //     })
 // )
+
+app.use(
+    cors({
+        origin: '*',  // Allows all origins, but only for testing
+        methods: 'GET,POST,PUT,DELETE',
+        credentials: true,
+    })
+);
+
 // Global input sanitization middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
