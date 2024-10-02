@@ -22,9 +22,7 @@
         "cors": "^2.8.5",
         "dotenv": "^16.4.5",
         "express": "^4.19.2",
-        "express-mongo-sanitize": "^2.2.0",
         "express-rate-limit": "^7.4.0",
-        "helmet": "^8.0.0",
         "ioredis": "^5.4.1",
         "joi": "^17.13.3",
         "jsonwebtoken": "^9.0.2",
@@ -40,7 +38,6 @@
         "winston": "^3.13.1"
     },
     "devDependencies": {
-        "@types/cors": "^2.8.17",
         "concurrently": "^8.2.2",
         "nodemon": "^3.1.4"
     }
