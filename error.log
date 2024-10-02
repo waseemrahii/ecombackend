@@ -15418,3 +15418,35 @@ Use mongoose.model(name, schema)
 2024-10-01T11:21:35.057Z [error]: TypeError: Cannot read properties of null (reading 'length')
     at file:///F:/Light%20House%20Digital/ecombackend/controllers/handleFactory.js:202:23
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:28:58.892Z [error]: Error: Customer ID is required
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:99:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:29:16.943Z [error]: Error: Incorrect email or password
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/authController.js:111:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:30:56.892Z [error]: Error: Customer ID is required
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:99:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:31:17.255Z [error]: ValidationError: Order validation failed: customer: Please provide customer.
+    at Document.invalidate (F:\Light House Digital\ecombackend\node_modules\mongoose\lib\document.js:3318:32)
+    at F:\Light House Digital\ecombackend\node_modules\mongoose\lib\document.js:3079:17
+    at F:\Light House Digital\ecombackend\node_modules\mongoose\lib\schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)
+2024-10-02T06:32:06.289Z [error]: Error: Customer ID is required
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:99:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:32:15.052Z [error]: ReferenceError: getCacheKey is not defined
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/orderControllers.js:73:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:32:52.230Z [error]: ReferenceError: Model is not defined
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/orderControllers.js:69:37
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

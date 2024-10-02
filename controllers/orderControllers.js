@@ -1,14 +1,10 @@
+import redisClient from '../config/redisConfig.js'
 import Coupon from '../models/couponModel.js'
 import Order from '../models/orderModel.js'
 import AppError from '../utils/appError.js'
 import catchAsync from '../utils/catchAsync.js'
-import {
-    createOne,
-    deleteOne,
-    getAll,
-    getOne,
-    updateStatus,
-} from './handleFactory.js'
+import { getCacheKey } from '../utils/helpers.js'
+import { deleteOne, getAll, getOne, updateStatus } from './handleFactory.js'
 
 const updateCouponUserLimit = catchAsync(async (_couponId, next) => {
     // Find the coupon by ID
@@ -70,11 +66,11 @@ export const createOrder = catchAsync(async (req, res, next) => {
         return next(new AppError(`Order could not be created`, 400))
     }
 
-    const cacheKeyOne = getCacheKey(Model.modelName, doc?._id)
+    const cacheKeyOne = getCacheKey('Order', doc?._id)
     await redisClient.setEx(cacheKeyOne, 3600, JSON.stringify(doc))
 
     // delete all documents caches related to this model
-    const cacheKey = getCacheKey(Model.modelName, '', req.query)
+    const cacheKey = getCacheKey('Order', '', req.query)
     await redisClient.del(cacheKey)
 
     res.status(201).json({
