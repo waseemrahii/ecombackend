@@ -127,6 +127,14 @@ export const createOne = (Model) =>
             return next(new AppError(`${docName} could not be created`, 400))
         }
 
+        if (
+            Model.modelName === 'SubCategory' ||
+            Model.modelName === 'SubSubCategory'
+        ) {
+            const modelCache = getCacheKey('Category', '')
+            await redisClient.del(modelCache)
+        }
+
         const cacheKeyOne = getCacheKey(Model.modelName, doc?._id)
         await redisClient.setEx(cacheKeyOne, 3600, JSON.stringify(doc))
 
@@ -181,13 +189,17 @@ export const getOne = (Model, popOptions) =>
 // GET All Documents
 export const getAll = (Model, popOptions) =>
     catchAsync(async (req, res, next) => {
-        console.log('GET ALL')
+        console.log('GET ALL', Model)
 
         const cacheKey = getCacheKey(Model.modelName, '', req.query)
 
+        console.log(cacheKey)
+
         // Check cache first
         const cacheddoc = await redisClient.get(cacheKey)
-        if (cacheddoc) {
+
+        if (cacheddoc !== null) {
+            console.log('cached')
             return res.status(200).json({
                 status: 'success',
                 cached: true,
@@ -218,6 +230,8 @@ export const getAll = (Model, popOptions) =>
             .paginate()
 
         const doc = await features.query
+
+        console.log(doc)
 
         // Cache the result
         await redisClient.setEx(cacheKey, 3600, JSON.stringify(doc))
@@ -326,8 +340,6 @@ export const updateStatus = (Model) =>
             return next(new AppError(`Please provide status value.`, 400))
         }
 
-        console.log('Status: ', req.body.status)
-
         // Perform the update operation
         const doc = await Model.findByIdAndUpdate(
             req.params.id,
@@ -361,3 +373,15 @@ export const updateStatus = (Model) =>
             doc,
         })
     })
+
+export const cleanCache = catchAsync(async (req, res, next) => {
+    try {
+        await redisClient.flushAll()
+        res.status(200).json({
+            status: 'success',
+            message: 'Redis cache cleaned.',
+        })
+    } catch (err) {
+        return next(new AppError('Redis cache not cleaned', 400))
+    }
+})

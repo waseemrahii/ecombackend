@@ -22,8 +22,8 @@ export const checkReferenceId = async (Model, foreignKey, next) => {
 }
 
 export const loginLimiter = rateLimit({
-    windowMs: 30 * 60 * 1000, // 30 minutes
-    max: 5, // limit each IP to 5 requests per windowMs
+    windowMs: 10 * 60 * 1000, // 10 minutes
+    max: 50, // limit each IP to 5 requests per windowMs
     handler: (req, res, next, options) => {
         res.status(options.statusCode).json({
             status: 'fail',

@@ -2,7 +2,7 @@
     "name": "ecommerce-bazaar-backend",
     "version": "1.0.0",
     "type": "module",
-    "description": "Ecommerce Baaazaar is an online shopping store.",
+    "description": "Vistamart Baaazaar is an online shopping store.",
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

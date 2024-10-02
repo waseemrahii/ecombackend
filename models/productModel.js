@@ -64,7 +64,6 @@ const productSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-
         taxAmount: {
             type: Number,
             default: 0,
@@ -120,6 +119,12 @@ const productSchema = new mongoose.Schema(
             required: true,
         },
         slug: String,
+        rating: {
+            type: Number,
+            required: [true, 'Please provide rating.'],
+            default: 0,
+            set: (val) => (Math.round(val * 10) / 10).toFixed(1),
+        },
         numOfReviews: {
             type: Number,
             required: [true, 'Number of reviews are required.'],
@@ -181,6 +186,13 @@ productSchema.virtual('reviews', {
     ref: 'ProductReview',
     localField: '_id',
     foreignField: 'product',
+})
+
+productSchema.virtual('totalOrders', {
+    ref: 'Order',
+    localField: '_id',
+    foreignField: 'products',
+    count: true,
 })
 
 productSchema.pre(/^find/, function (next) {

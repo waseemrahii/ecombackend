@@ -7,8 +7,9 @@ import {
     updateFeaturedDealStatus,
     deleteFeaturedDeal,
     getFeaturedDealById,
-    deleteProductFromFeaturedDeal,
+    removeProductFromFeaturedDeal,
 } from '../controllers/featuredDealController.js'
+
 import { validateSchema } from '../middleware/validationMiddleware.js'
 import featuredDealValidationSchema from './../validations/featuredDealValidator.js'
 
@@ -28,8 +29,6 @@ router.route('/:id/add-product').put(addProductToFeaturedDeal)
 
 router.route('/:id/status').patch(updateFeaturedDealStatus)
 
-router
-    .route('/:id/remove-product/:productId')
-    .delete(deleteProductFromFeaturedDeal)
+router.route('/:id/remove-product').delete(removeProductFromFeaturedDeal)
 
 export default router

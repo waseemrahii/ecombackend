@@ -4,6 +4,9 @@ import AppError from '../utils/appError.js'
 
 const orderSchema = new mongoose.Schema(
     {
+        orderId: {
+            type: Number,
+        },
         customer: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Customer',

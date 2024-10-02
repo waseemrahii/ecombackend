@@ -38,7 +38,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 router
-    .route('/')
+    .route('/signup')
     .post(
         upload.fields([
             { name: 'vendorImage' },
@@ -46,9 +46,20 @@ router
             { name: 'banner' },
         ]),
         validateSchema(vendorValidationSchema),
-        createVendor
+        registerVendor
     )
-    .get(getAllVendors)
+
+router.route('/').get(getAllVendors)
+
+// .post(
+//     upload.fields([
+//         { name: 'vendorImage' },
+//         { name: 'logo' },
+//         { name: 'banner' },
+//     ]),
+//     validateSchema(vendorValidationSchema),
+//     createVendor
+// )
 
 router
     .route('/:id')
@@ -56,16 +67,6 @@ router
     .delete(protect, restrictTo('admin', 'vendor'), deleteVendor)
 
 router.route('/:vendorId/status').put(protect, updateVendorStatus)
-
-router.route('/signup').post(
-    upload.fields([
-        { name: 'vendorImage' },
-        { name: 'logo' },
-        { name: 'banner' },
-    ]),
-    // validateSchema(vendorValidationSchema),
-    registerVendor
-)
 
 router.put('/update-password', protect, selectModelByRole, updatePassword)
 

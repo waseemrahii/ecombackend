@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import AppError from '../utils/appError.js'
 
 const featuredDealSchema = new mongoose.Schema(
     {

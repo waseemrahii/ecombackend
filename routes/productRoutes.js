@@ -15,6 +15,8 @@ import {
     getProductBySlug,
 } from '../controllers/productController.js'
 import { protect, restrictTo } from './../middleware/authMiddleware.js'
+import { validateSchema } from '../middleware/validationMiddleware.js'
+import productValidationSchema from './../validations/productValidator.js'
 
 const router = express.Router()
 
@@ -42,6 +44,7 @@ router
             { name: 'thumbnail' },
             { name: 'images', maxCount: 10 },
         ]),
+        // validateSchema(productValidationSchema),
         createProduct
     )
     .get(getAllProducts)
