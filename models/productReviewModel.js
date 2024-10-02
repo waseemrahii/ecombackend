@@ -42,6 +42,7 @@ productReviewSchema.pre(/^find/, function (next) {
         path: 'product',
         select: '-__v -createdAt -updatedAt',
     })
+    next()
 })
 
 productReviewSchema.pre('save', async function (next) {
