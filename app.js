@@ -4,6 +4,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 import globalErrorHandler from './controllers/errorController.js'
 import AppError from './utils/appError.js'
+import mongoSanitize from 'express-mongo-sanitize'
 
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
@@ -41,6 +42,8 @@ const __dirname = dirname(__filename)
 
 const app = express()
 
+app.use(mongoSanitize())
+
 app.use(
     cors({
         origin: [
@@ -49,6 +52,7 @@ app.use(
             'http://localhost:5175',
             'https://ecomuserpanel.lighthouseclouds.com/',
             'https://ecommercebaazaar.com/',
+            'https://ebazaar-ten.vercel.app/',
         ],
         credentials: true,
     })
