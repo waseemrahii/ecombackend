@@ -11,18 +11,18 @@ connectDB()
 const port = config.port || 3000
 
 // Schedule the task here
-cron.schedule('0 0 * * *', async () => {
-    try {
-        const currentDate = new Date()
-        await FeaturedDeal.updateMany(
-            { endDate: { $lt: currentDate } },
-            { $set: { status: 'expired' } }
-        )
-        console.log('Expired Feartured deals updated successfully')
-    } catch (error) {
-        console.error('Error updating expired deals:', error)
-    }
-})
+// cron.schedule('0 0 * * *', async () => {
+//     try {
+//         const currentDate = new Date()
+//         await FeaturedDeal.updateMany(
+//             { endDate: { $lt: currentDate } },
+//             { $set: { status: 'expired' } }
+//         )
+//         console.log('Expired Feartured deals updated successfully')
+//     } catch (error) {
+//         console.error('Error updating expired deals:', error)
+//     }
+// })
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`)
