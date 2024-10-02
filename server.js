@@ -1,8 +1,5 @@
 import config from './config/index.js'
 import connectDB from './config/db.js'
-import cron from 'node-cron'
-
-import FeaturedDeal from './models/featuredDealModel.js'
 
 import app from './app.js'
 
