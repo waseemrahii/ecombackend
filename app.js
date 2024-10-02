@@ -32,6 +32,7 @@ app.use(
             'https://ecommercebaazaar.com/',
             'https://ebazaar-ten.vercel.app/',
             'https://ecocmadmin.vercel.app/',
+            'https://vistamart.vercel.app/',
         ],
         methods: 'GET,POST,PUT,DELETE',
         allowedHeaders: 'Content-Type, Authorization',
