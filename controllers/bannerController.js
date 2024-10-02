@@ -1,18 +1,22 @@
 import Banner from '../models/bannerModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import { deleteOne, getAll, getOne } from './handleFactory.js'
+import { compressAndConvertToBase64 } from '../utils/imageBuffer.js'
 
 // Create a new banner
 export const createBanner = catchAsync(async (req, res) => {
-    const { bannerType, resourceType, resourceId, url, publish } = req.body
-    const bannerImage = req.file ? req.file.path : null
+    const { bannerType, resourceType, resourceId, url, publish, bannerImage } = req.body
+
+  const compressedBannerImage = await compressAndConvertToBase64(bannerImage);
+
+  console.log(compressedBannerImage )
 
     const banner = new Banner({
         bannerType,
         resourceType,
         resourceId,
         url,
-        bannerImage,
+         bannerImage: compressedBannerImage, 
         publish,
     })
     await banner.save()
@@ -25,8 +29,8 @@ export const getBanners = getAll(Banner)
 // Update a banner (including publish field and banner image)
 export const updateBanner = catchAsync(async (req, res) => {
     const { id } = req.params
-    const { bannerType, resourceType, resourceId, url, publish } = req.body
-    const bannerImage = req.file ? req.file.path : null
+    const { bannerType, resourceType, resourceId, url, publish, bannerImage } = req.body
+    
 
     const updatedFields = {
         bannerType,

@@ -19,9 +19,8 @@ const checkExpiration = (flashDeal) => {
 
 // Create Flash Deal
 export const createFlashDeal = catchAsync(async (req, res) => {
-    const { title, startDate, endDate } = req.body
-    const image = req.file ? req.file.path : ''
-
+    const { title, startDate, endDate,image } = req.body
+    
     const doc = new FlashDeal({
         title,
         startDate,

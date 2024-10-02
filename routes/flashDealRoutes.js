@@ -16,33 +16,10 @@ import flashDealValidationSchema from './../validations/flashDealValidator.js'
 
 const router = express.Router()
 
-// Set up multer for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`)
-    },
-})
-
-const upload = multer({
-    storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit
-})
-
-// Middleware to log file uploads
-router.use((req, res, next) => {
-    if (req.file) {
-        console.log('Uploaded file:', req.file)
-    }
-    next()
-})
 
 router
     .route('/')
     .post(
-        upload.single('image'),
         // validateSchema(flashDealValidationSchema),
         createFlashDeal
     )
@@ -51,7 +28,7 @@ router
 router
     .route('/:id')
     .get(getFlashDealById)
-    .put(upload.single('image'), updateFlashDeal)
+    .put( updateFlashDeal)
     .delete(deleteFlashDeal)
 
 router.route('/add-product/:flashDealId').put(addProductToFlashDeal)

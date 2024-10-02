@@ -36,8 +36,7 @@ export const searchNotifications = catchAsync(async (req, res) => {
 
 // Create a new notification
 export const createNotification = catchAsync(async (req, res) => {
-    const { title, description, status } = req.body
-    const image = req.file ? req.file.path : ''
+    const { title, description, status, image } = req.body
 
     const doc = await Notification.create({
         title,
@@ -57,8 +56,7 @@ export const createNotification = catchAsync(async (req, res) => {
 })
 // Update an existing notification
 export const updateNotification = catchAsync(async (req, res) => {
-    const { title, description, userLimit, status } = req.body
-    const image = req.file ? req.file.path : ''
+    const { title, description, userLimit, status, image } = req.body
 
     const updatedNotification = await Notification.findByIdAndUpdate(
         req.params.id,

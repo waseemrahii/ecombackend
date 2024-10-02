@@ -75,12 +75,13 @@ export const registerVendor = catchAsync(async (req, res) => {
         shopName,
         address,
     } = req.body
+    const {vendorImage, logo, banner } = req.body
 
-    const vendorImage = req.files['vendorImage']
-        ? req.files['vendorImage'][0].path
-        : null
-    const logo = req.files['logo'] ? req.files['logo'][0].path : null
-    const banner = req.files['banner'] ? req.files['banner'][0].path : null
+    // const vendorImage = req.files['vendorImage']
+    //     ? req.files['vendorImage'][0].path
+    //     : null
+    // const logo = req.files['logo'] ? req.files['logo'][0].path : null
+    // const banner = req.files['banner'] ? req.files['banner'][0].path : null
 
     const newVendor = new Vendor({
         firstName,
