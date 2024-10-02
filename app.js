@@ -30,6 +30,7 @@ app.use(
             'https://ecomuserpanel.lighthouseclouds.com/',
             'https://ecommercebaazaar.com/',
             'https://ebazaar-ten.vercel.app/',
+            'https://ecocmadmin.vercel.app/',
         ],
         credentials: true,
     })
