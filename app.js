@@ -31,6 +31,7 @@ app.use(
             'https://ecomuserpanel.lighthouseclouds.com/',
             'https://ecommercebaazaar.com/',
             'https://ebazaar-ten.vercel.app/',
+            'https://ecocmadmin.vercel.app/',
         ],
         methods: 'GET,POST,PUT,DELETE',
         allowedHeaders: 'Content-Type, Authorization',
