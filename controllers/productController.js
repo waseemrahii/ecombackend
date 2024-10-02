@@ -7,6 +7,7 @@ import {
 import Customer from '../models/customerModel.js'
 import {
     deleteOne,
+    deleteOneWithTransaction,
     getAll,
     getOne,
     getOneBySlug,
@@ -151,7 +152,7 @@ export const getProductBySlug = getOneBySlug(Product, {
 })
 
 // Delete a Product
-export const deleteProduct = deleteOne(Product)
+export const deleteProduct = deleteOneWithTransaction(Product)
 
 // update product
 // Add a new review to a product

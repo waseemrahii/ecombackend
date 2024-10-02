@@ -16687,3 +16687,29 @@ Use mongoose.model(name, schema)
 2024-10-02T06:32:52.230Z [error]: ReferenceError: Model is not defined
     at file:///F:/Light%20House%20Digital/ecombackend/controllers/orderControllers.js:69:37
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:34:13.267Z [error]: Error: You do not have permission to perform this action.
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:109:17
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:99:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:39:18.745Z [error]: Error: You do not have permission to perform this action.
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:109:17
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:99:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:45:08.588Z [error]: ReferenceError: popOptions is not defined
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/orderControllers.js:110:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:46:00.391Z [error]: TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'NativeConnection'
+    |     property 'base' -> object with constructor 'Mongoose'
+    |     property 'connections' -> object with constructor 'Array'
+    --- index 0 closes the circle
+    at JSON.stringify (<anonymous>)
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/orderControllers.js:115:50
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T06:46:24.853Z [error]: Error: No Order found with that customer Id
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/orderControllers.js:111:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

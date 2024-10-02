@@ -88,3 +88,35 @@ export const getOrderById = getOne(Order)
 
 // Update an order's status
 export const updateOrderStatus = updateStatus(Order)
+
+export const getOrderByCustomer = catchAsync(async (req, res, next) => {
+    const customerId = req.params.customerId
+
+    const cacheKey = getCacheKey('Order', customerId)
+    // Check cache first
+    const cachedDoc = await redisClient.get(cacheKey)
+
+    if (cachedDoc) {
+        return res.status(200).json({
+            status: 'success',
+            cached: true,
+            doc: JSON.parse(cachedDoc),
+        })
+    }
+
+    // If not in cache, fetch from database
+    const doc = await Order.findOne({ customer: customerId })
+
+    if (!doc) {
+        return next(new AppError(`No Order found with that customer Id`, 404))
+    }
+
+    // Cache the result
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(doc))
+
+    res.status(200).json({
+        status: 'success',
+        cached: false,
+        doc,
+    })
+})
