@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import globalErrorHandler from './controllers/errorController.js'
 import AppError from './utils/appError.js'
 import mongoSanitize from 'express-mongo-sanitize'
+import helmet from 'helmet'
 
 import { fileURLToPath } from 'url'
 import path, { dirname } from 'path'
@@ -31,6 +32,8 @@ app.use(
             'https://ecommercebaazaar.com/',
             'https://ebazaar-ten.vercel.app/',
         ],
+        methods: 'GET,POST,PUT,DELETE',
+        allowedHeaders: 'Content-Type, Authorization',
         credentials: true,
     })
 )
@@ -43,6 +46,7 @@ app.use(
 // )
 // Global input sanitization middleware
 app.use(express.json())
+app.use(helmet())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
