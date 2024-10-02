@@ -15476,3 +15476,101 @@ Use mongoose.model(name, schema)
 2024-10-02T06:46:24.853Z [error]: Error: No Order found with that customer Id
     at file:///F:/Light%20House%20Digital/ecombackend/controllers/orderControllers.js:111:21
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-02T10:48:52.263Z [error]: Error: User id must be a string
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:530:35)
+    at finish (node:internal/streams/writable:945:10)
+    at node:internal/streams/writable:926:13
+2024-10-02T10:49:23.390Z [error]: Error: "userId" must be a string
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:530:35)
+    at finish (node:internal/streams/writable:945:10)
+    at node:internal/streams/writable:926:13
+2024-10-02T10:50:29.088Z [error]: Error: UserType must be either vendor or admin
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:530:35)
+    at finish (node:internal/streams/writable:945:10)
+    at node:internal/streams/writable:926:13
+2024-10-02T10:51:54.351Z [error]: Error: UserType must be either vendor or admin
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:530:35)
+    at finish (node:internal/streams/writable:945:10)
+    at node:internal/streams/writable:926:13
+2024-10-02T10:52:10.267Z [error]: Error: "userId" is not allowed
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:530:35)
+    at finish (node:internal/streams/writable:945:10)
+    at node:internal/streams/writable:926:13
+2024-10-02T10:52:41.172Z [error]: Error: "userId" must be a string
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:530:35)
+    at finish (node:internal/streams/writable:945:10)
+    at node:internal/streams/writable:926:13
+2024-10-02T10:53:22.596Z [error]: Error: "userId" must be a string
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:530:35)
+    at finish (node:internal/streams/writable:945:10)
+    at node:internal/streams/writable:926:13
+2024-10-02T10:53:25.090Z [error]: Error: "userId" must be a string
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at Multipart.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:166:7)
+    at Multipart.emit (node:events:518:28)
+    at emitCloseNT (node:internal/streams/destroy:147:10)
+    at process.processTicksAndRejections (node:internal/process/task_queues:81:21)
+2024-10-02T10:55:50.028Z [error]: Error: "userId" must be a string
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/validationMiddleware.js:6:21
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at done (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:45:7)
+    at indicateDone (F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:49:68)
+    at F:\Light House Digital\ecombackend\node_modules\multer\lib\make-middleware.js:155:11
+    at WriteStream.<anonymous> (F:\Light House Digital\ecombackend\node_modules\multer\storage\disk.js:43:9)
+    at WriteStream.emit (node:events:530:35)
+    at finish (node:internal/streams/writable:945:10)
+    at node:internal/streams/writable:926:13

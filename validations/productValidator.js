@@ -43,10 +43,6 @@ const productValidationSchema = Joi.object({
         'string.base': 'Unit must be a string',
         'string.empty': 'Unit cannot be empty',
     }),
-    tags: Joi.array().items(Joi.string()).optional().allow('').messages({
-        'array.base': 'Tags must be an array of strings',
-        'string.base': 'Tag must be a string',
-    }),
     price: Joi.number().required().messages({
         'any.required': 'Please provide Price',
         'number.base': 'Price must be a number',
@@ -100,12 +96,10 @@ const productValidationSchema = Joi.object({
     videoLink: Joi.string().optional().allow('').messages({
         'string.base': 'VideoLink must be a string',
     }),
-
-    userId: Joi.string().required().messages({
-        'any.required': 'Please provide user.',
-        'string.base': 'UserId must be a string',
+    userId: Joi.string().messages({
+        'any.required': 'Please provide user id.',
     }),
-    userType: Joi.string().valid('vendor', 'admin').required().messages({
+    userType: Joi.string().valid('vendor', 'admin').messages({
         'any.required': 'UserType is required',
         'string.base': 'UserType must be a string',
         'any.only': 'UserType must be either vendor or admin',

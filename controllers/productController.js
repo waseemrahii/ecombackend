@@ -6,7 +6,6 @@ import {
 } from '../utils/responseHandler.js'
 import Customer from '../models/customerModel.js'
 import {
-    deleteOne,
     deleteOneWithTransaction,
     getAll,
     getOne,
@@ -16,9 +15,12 @@ import {
 import { getCacheKey } from '../utils/helpers.js'
 import redisClient from '../config/redisConfig.js'
 import slugify from 'slugify'
+import mongoose from 'mongoose'
+import AppError from '../utils/appError.js'
+import Wishlist from '../models/wishlistModel.js'
 
 // Create a new product
-export const createProduct = catchAsync(async (req, res) => {
+export const createProduct = catchAsync(async (req, res, next) => {
     const {
         name,
         description,
@@ -48,6 +50,18 @@ export const createProduct = catchAsync(async (req, res) => {
         userId,
         userType,
     } = req.body
+
+    if (userType === 'vendor') {
+        const vendor = await mongoose.model('Vendor').findById(this.userId)
+        if (!vendor) {
+            return next(new AppError('Referenced vendor does not exist', 400))
+        }
+    } else if (userType === 'admin') {
+        const user = await mongoose.model('User').findById(this.userId)
+        if (!user) {
+            return next(new AppError('Referenced user does not exist', 400))
+        }
+    }
 
     let updatedDiscountAmount = discountAmount
 
@@ -151,8 +165,10 @@ export const getProductBySlug = getOneBySlug(Product, {
     path: 'reviews  totalOrders',
 })
 
+const relatedModels = [{ model: Wishlist, foreignKey: 'products' }]
+
 // Delete a Product
-export const deleteProduct = deleteOneWithTransaction(Product)
+export const deleteProduct = deleteOneWithTransaction(Product, relatedModels)
 
 // update product
 // Add a new review to a product

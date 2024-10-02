@@ -41,6 +41,11 @@ const orderValidationSchema = Joi.object({
             'any.only': 'Invalid payment method',
         }),
     shippingAddress: Joi.object({
+        name: Joi.string().required().messages({
+            'string.base': 'Name must be a string.',
+            'string.empty': 'Please provide a name.',
+            'any.required': 'Name is required.',
+        }),
         address: Joi.string().required().messages({
             'any.required': 'Shipping address is required',
             'string.base': 'Shipping address must be a string',
@@ -66,12 +71,18 @@ const orderValidationSchema = Joi.object({
             'string.base': 'Shipping country must be a string',
             'string.empty': 'Shipping country cannot be empty',
         }),
+        phoneNumber: Joi.string().optional().allow(''),
     })
         .required()
         .messages({
             'any.required': 'Shipping address is required',
         }),
     billingAddress: Joi.object({
+        name: Joi.string().required().messages({
+            'string.base': 'Name must be a string.',
+            'string.empty': 'Please provide a name.',
+            'any.required': 'Name is required.',
+        }),
         address: Joi.string().required().messages({
             'any.required': 'Billing address is required',
             'string.base': 'Billing address must be a string',
@@ -92,11 +103,13 @@ const orderValidationSchema = Joi.object({
             'string.base': 'Billing zip code must be a string',
             'string.empty': 'Billing zip code cannot be empty',
         }),
+
         country: Joi.string().required().messages({
             'any.required': 'Billing country is required',
             'string.base': 'Billing country must be a string',
             'string.empty': 'Billing country cannot be empty',
         }),
+        phoneNumber: Joi.string().optional().allow(''),
     })
         .required()
         .messages({
