@@ -13,13 +13,16 @@ import wishlistValidationSchema from '../validations/wishlistValidator.js'
 const router = express.Router()
 
 router.get('/', protect, getAllWishlists)
+
 router.post(
     '/add',
     protect,
     validateSchema(wishlistValidationSchema),
     addProductToWishlist
 )
+
 router.delete('/products/:productId', protect, removeProductFromWishlist)
+
 router
     .route('/:customerId')
     .get(protect, getWishlist)

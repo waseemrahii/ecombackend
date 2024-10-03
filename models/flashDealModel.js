@@ -50,8 +50,6 @@ flashDealSchema.virtual('activeProducts').get(function () {
 })
 
 flashDealSchema.pre('save', function (next) {
-    console.log(this.endDate)
-
     // Check if endDate is less than startDate
     if (this.endDate && this.startDate && this.endDate < this.startDate) {
         this.status = 'expired'

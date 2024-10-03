@@ -16811,3 +16811,62 @@ Use mongoose.model(name, schema)
     at WriteStream.emit (node:events:530:35)
     at finish (node:internal/streams/writable:945:10)
     at node:internal/streams/writable:926:13
+2024-10-03T05:55:59.555Z [error]: Error: You do not have permission to perform this action.
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:109:17
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:99:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-03T05:56:33.584Z [error]: Error: No vendor found with that ID
+    at file:///F:/Light%20House%20Digital/ecombackend/controllers/handleFactory.js:298:21
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-03T06:58:27.110Z [error]: Error: Can't find this /feature-deals on this server.
+    at file:///F:/Light%20House%20Digital/ecombackend/app.js:98:9
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at Route.dispatch (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:119:3)
+2024-10-03T07:35:12.964Z [error]: Error: Can't find this /feature-deals on this server.
+    at file:///F:/Light%20House%20Digital/ecombackend/app.js:98:9
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at Route.dispatch (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:119:3)
+2024-10-03T07:35:20.888Z [error]: Error: Can't find this /feature-deals on this server.
+    at file:///F:/Light%20House%20Digital/ecombackend/app.js:98:9
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:145:7)
+    at Route.dispatch (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:119:3)
+2024-10-03T07:45:55.019Z [error]: Error: You are not logged in! Please log in to get access.
+    at file:///F:/Light%20House%20Digital/ecombackend/middleware/authMiddleware.js:45:13
+    at file:///F:/Light%20House%20Digital/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (F:\Light House Digital\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (F:\Light House Digital\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at F:\Light House Digital\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at param (F:\Light House Digital\ecombackend\node_modules\express\lib\router\index.js:365:14)
+    at param (F:\Light House Digital\ecombackend\node_modules\express\lib\router\index.js:376:14)
+    at Function.process_params (F:\Light House Digital\ecombackend\node_modules\express\lib\router\index.js:421:3)
+2024-10-03T07:58:21.909Z [error]: ValidationError: Validation failed: status: `approvejd` is not a valid enum value for path `status`.
+    at _done (F:\Light House Digital\ecombackend\node_modules\mongoose\lib\helpers\updateValidators.js:228:19)
+    at F:\Light House Digital\ecombackend\node_modules\mongoose\lib\helpers\updateValidators.js:204:11
+    at schemaPath.doValidate.updateValidator (F:\Light House Digital\ecombackend\node_modules\mongoose\lib\helpers\updateValidators.js:162:13)
+    at F:\Light House Digital\ecombackend\node_modules\mongoose\lib\schemaType.js:1388:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:77:11)

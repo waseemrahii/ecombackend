@@ -8,6 +8,10 @@ const refundSchema = new mongoose.Schema(
             ref: 'Order',
             required: [true, 'Please provide order Id.'],
         },
+        reason: {
+            type: String,
+            required: [true, 'Please provide reason.'],
+        },
         status: {
             type: String,
             enum: ['pending', 'approved', 'refunded', 'rejected'],
@@ -15,17 +19,6 @@ const refundSchema = new mongoose.Schema(
         },
         statusReason: {
             type: String,
-        },
-        reason: {
-            type: String,
-            required: [true, 'Please provide reason.'],
-        },
-        requestedAt: {
-            type: Date,
-            default: Date.now,
-        },
-        processedAt: {
-            type: Date,
         },
     },
     { timestamps: true }

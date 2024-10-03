@@ -53,11 +53,13 @@ export const createProduct = catchAsync(async (req, res, next) => {
 
     if (userType === 'vendor') {
         const vendor = await mongoose.model('Vendor').findById(this.userId)
+
         if (!vendor) {
             return next(new AppError('Referenced vendor does not exist', 400))
         }
     } else if (userType === 'admin') {
         const user = await mongoose.model('User').findById(this.userId)
+
         if (!user) {
             return next(new AppError('Referenced user does not exist', 400))
         }
@@ -101,12 +103,8 @@ export const createProduct = catchAsync(async (req, res, next) => {
         videoLink,
         userId,
         userType,
-        thumbnail: req.files['thumbnail']
-            ? req.files['thumbnail'][0].path
-            : undefined,
-        images: req.files['images']
-            ? req.files['images'].map((file) => file.path)
-            : [],
+        thumbnail,
+        images,
         slug: slugify(name, { lower: true }),
     })
     await newProduct.save()
@@ -197,59 +195,6 @@ export const updateProductFeaturedStatus = catchAsync(
         })
     }
 )
-// Get top-rated products
-export const getTopRatedProducts = async (req, res) => {
-    try {
-        const topRatedProducts = await Product.aggregate([
-            { $match: { status: 'active' } },
-            { $unwind: '$reviews' },
-            {
-                $group: {
-                    _id: '$_id',
-                    name: { $first: '$name' },
-                    averageRating: { $avg: '$reviews.rating' },
-                },
-            },
-            { $sort: { averageRating: -1 } },
-            { $limit: 10 },
-        ])
-
-        sendSuccessResponse(res, 200, topRatedProducts)
-    } catch (error) {
-        sendErrorResponse(res, error)
-    }
-}
-
-// Get products with limited stock
-export const getLimitedStockedProducts = async (req, res) => {
-    try {
-        const limitThreshold = 10
-        const cacheKey = 'limited_stocked_products'
-        const cachedProducts = await client.get(cacheKey)
-
-        if (cachedProducts) {
-            return sendSuccessResponse(res, 200, JSON.parse(cachedProducts))
-        }
-
-        const limitedStockedProducts = await Product.find({
-            stock: { $lte: limitThreshold },
-            status: 'active',
-        })
-            .populate('category', 'name')
-            .populate('subCategory', 'name')
-            .populate('brand', 'name')
-
-        await client.set(
-            cacheKey,
-            JSON.stringify(limitedStockedProducts),
-            'EX',
-            3600
-        ) // Cache for 1 hour
-        sendSuccessResponse(res, limitedStockedProducts, 200)
-    } catch (error) {
-        sendErrorResponse(res, error)
-    }
-}
 
 // Mark product as sold
 export const sellProduct = catchAsync(async (req, res) => {
@@ -258,7 +203,7 @@ export const sellProduct = catchAsync(async (req, res) => {
     const product = await Product.findById(productId)
 
     if (!product) {
-        return next(new AppError(`No product found`, 404))
+        return next(new AppError(`No product found with that ID.`, 404))
     }
 
     product.status = 'sold'
@@ -359,38 +304,5 @@ export const updateProduct = catchAsync(async (req, res) => {
     res.status(200).json({
         status: 'success',
         doc: updatedProduct,
-    })
-})
-
-export const searchProducts = catchAsync(async (req, res, next) => {
-    const { query, page = 1, limit = 10 } = req.query
-
-    // Construct regex for case-insensitive partial matching
-    const searchQuery = {
-        $or: [
-            { name: { $regex: query, $options: 'i' } }, // Case-insensitive search in 'name'
-            { description: { $regex: query, $options: 'i' } }, // Case-insensitive search in 'description'
-        ],
-    }
-
-    // Fetch products with pagination
-    const products = await Product.find(searchQuery)
-        .skip((page - 1) * limit)
-        .limit(parseInt(limit))
-
-    // Check if products were found
-    if (products.length === 0) {
-        return next(new AppError(`No product found`, 404))
-    }
-
-    // Get total product count
-    const total = await Product.countDocuments(searchQuery)
-
-    res.status(200).json({
-        status: 'success',
-        results: products.length,
-        doc: products,
-        totalPages: Math.ceil(total / limit),
-        currentPage: parseInt(page),
     })
 })

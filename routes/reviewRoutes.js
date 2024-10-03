@@ -23,7 +23,7 @@ router
     .route('/:id')
     .get(protect, getProductReviewById)
     .put(protect, updateProductReview)
-    .delete(protect, deleteProductReview)
+    .delete(protect, restrictTo('admin'), deleteProductReview)
 
 router.put(
     '/status/:id',

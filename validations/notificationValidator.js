@@ -12,16 +12,6 @@ const notificationValidationSchema = Joi.object({
         'string.empty': 'Description cannot be empty',
     }),
     image: Joi.string().optional().allow(''),
-    status: Joi.string()
-        .valid('active', 'inactive')
-        .default('inactive')
-        .messages({
-            'string.base': 'Status must be a string',
-            'any.only': 'Invalid status',
-        }),
-    count: Joi.number().default(0).messages({
-        'number.base': 'Count must be a number',
-    }),
 })
 
 export default notificationValidationSchema

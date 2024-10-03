@@ -1,4 +1,3 @@
-// routes/orderRoutes.js
 import express from 'express'
 import {
     createOrder,
@@ -21,7 +20,10 @@ router
 
 router.get('/customer/:customerId', getOrderByCustomer)
 
-router.route('/:id').get(protect, getOrderById).delete(protect, deleteOrder)
+router
+    .route('/:id')
+    .get(protect, getOrderById)
+    .delete(protect, restrictTo('admin', 'vendor'), deleteOrder)
 
 router
     .route('/:id/status')

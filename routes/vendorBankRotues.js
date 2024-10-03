@@ -7,6 +7,7 @@ import {
     deleteVendorBank,
     getAllVendorBanks,
     getVendorBankById,
+    updateVendorBank,
 } from '../controllers/vendorBankController.js'
 
 const router = express.Router()
@@ -19,6 +20,7 @@ router
 router
     .route('/:id')
     .get(protect, getVendorBankById)
+    .put(protect, restrictTo('admin', 'vendor'), updateVendorBank)
     .delete(protect, restrictTo('admin'), deleteVendorBank)
 
 export default router
