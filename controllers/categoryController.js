@@ -1,55 +1,55 @@
-import Category from '../models/categoryModel.js'
+import Category from "../models/categoryModel.js";
 import {
-    sendErrorResponse,
-    sendSuccessResponse,
-} from '../utils/responseHandler.js'
-import fs from 'fs'
-import path from 'path'
-import slugify from 'slugify'
-import { client } from '../utils/redisClient.js'
+  sendErrorResponse,
+  sendSuccessResponse,
+} from "../utils/responseHandler.js";
+import fs from "fs";
+import path from "path";
+import slugify from "slugify";
+import { client } from "../utils/redisClient.js";
 import {
-    deleteOne,
-    deleteOneWithTransaction,
-    getAll,
-    getOne,
-    getOneBySlug,
-} from './handleFactory.js'
-import catchAsync from '../utils/catchAsync.js'
-import { getCacheKey } from '../utils/helpers.js'
-import redisClient from '../config/redisConfig.js'
-import SubCategory from '../models/subCategoryModel.js'
-import SubSubCategory from '../models/subSubCategoryModel.js'
-import Product from '../models/productModel.js'
+  deleteOne,
+  deleteOneWithTransaction,
+  getAll,
+  getOne,
+  getOneBySlug,
+} from "./handleFactory.js";
+import catchAsync from "../utils/catchAsync.js";
+import { getCacheKey } from "../utils/helpers.js";
+import redisClient from "../config/redisConfig.js";
+import SubCategory from "../models/subCategoryModel.js";
+import SubSubCategory from "../models/subSubCategoryModel.js";
+import Product from "../models/productModel.js";
 
 // Create a new category
 export const createCategory = catchAsync(async (req, res) => {
-    const { name, priority } = req.body
-    console.log(req.file)
-    const logo = req.file ? req.file.filename : null
-    const slug = slugify(name, { lower: true })
+  const { name, priority, logo } = req.body;
+  console.log(req.file);
 
-    const category = new Category({ name, logo, priority, slug })
-    await category.save()
+  const slug = slugify(name, { lower: true });
 
-    if (!category) {
-        return res.status(400).json({
-            status: 'fail',
-            message: `Category could not be created`,
-        })
-    }
+  const category = new Category({ name, logo, priority, slug });
+  await category.save();
 
-    const cacheKeyOne = getCacheKey('Category', category?._id)
-    await redisClient.setEx(cacheKeyOne, 3600, JSON.stringify(category))
+  if (!category) {
+    return res.status(400).json({
+      status: "fail",
+      message: `Category could not be created`,
+    });
+  }
 
-    // delete all documents caches related to this model
-    const cacheKey = getCacheKey('Category', '', req.query)
-    await redisClient.del(cacheKey)
+  const cacheKeyOne = getCacheKey("Category", category?._id);
+  await redisClient.setEx(cacheKeyOne, 3600, JSON.stringify(category));
 
-    res.status(201).json({
-        status: 'success',
-        doc: category,
-    })
-})
+  // delete all documents caches related to this model
+  const cacheKey = getCacheKey("Category", "", req.query);
+  await redisClient.del(cacheKey);
+
+  res.status(201).json({
+    status: "success",
+    doc: category,
+  });
+});
 // Get all categories with optional search functionality
 // export const getCategories = async (req, res) => {
 //     try {
@@ -75,59 +75,59 @@ export const createCategory = catchAsync(async (req, res) => {
 // };
 
 export const getCategories = getAll(Category, {
-    path: [
-        'productCount',
-        {
-            path: 'subCategories',
-            select: '_id name slug',
-        },
-        {
-            path: 'subSubCategories',
-            select: '_id name slug',
-        },
-    ],
-})
+  path: [
+    "productCount",
+    {
+      path: "subCategories",
+      select: "_id name slug",
+    },
+    {
+      path: "subSubCategories",
+      select: "_id name slug",
+    },
+  ],
+});
 
 // Get a single category by ID
-export const getCategoryById = getOne(Category)
+export const getCategoryById = getOne(Category);
 
 // Update a category by ID
 export const updateCategory = catchAsync(async (req, res) => {
-    const { name, priority } = req.body
-    const logo = req.file ? req.file.filename : req.body.logo
-    const slug = slugify(name, { lower: true })
+  const { name, priority, logo } = req.body;
+  // const logo = req.file ? req.file.filename : req.body.logo
+  const slug = slugify(name, { lower: true });
 
-    const category = await Category.findByIdAndUpdate(
-        req.params.id,
-        { name, logo, priority, slug },
-        {
-            new: true,
-            runValidators: true,
-        }
-    )
-
-    if (!category) {
-        return next(new AppError(`No category found with that Id.`, 404))
+  const category = await Category.findByIdAndUpdate(
+    req.params.id,
+    { name, logo, priority, slug },
+    {
+      new: true,
+      runValidators: true,
     }
+  );
 
-    await client.del(`category_${req.params.id}`)
-    await client.del('categories')
+  if (!category) {
+    return next(new AppError(`No category found with that Id.`, 404));
+  }
 
-    res.status(200).json({
-        status: 'success',
-        doc: category,
-    })
-})
+  await client.del(`category_${req.params.id}`);
+  await client.del("categories");
+
+  res.status(200).json({
+    status: "success",
+    doc: category,
+  });
+});
 // Delete a category by ID
 // Define related models and their foreign keys
 const relatedModels = [
-    { model: SubCategory, foreignKey: 'mainCategory' },
-    { model: SubSubCategory, foreignKey: 'mainCategory' },
-    { model: Product, foreignKey: 'category' },
-]
+  { model: SubCategory, foreignKey: "mainCategory" },
+  { model: SubSubCategory, foreignKey: "mainCategory" },
+  { model: Product, foreignKey: "category" },
+];
 
 // Delete a category by ID
-export const deleteCategory = deleteOneWithTransaction(Category, relatedModels)
+export const deleteCategory = deleteOneWithTransaction(Category, relatedModels);
 
 // Get category by slug
-export const getCategoryBySlug = getOneBySlug(Category)
+export const getCategoryBySlug = getOneBySlug(Category);

@@ -25,26 +25,10 @@ import {
 
 const router = express.Router()
 
-// Set up multer for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`)
-    },
-})
-
-const upload = multer({ storage })
 
 router
     .route('/signup')
     .post(
-        upload.fields([
-            { name: 'vendorImage' },
-            { name: 'logo' },
-            { name: 'banner' },
-        ]),
         validateSchema(vendorValidationSchema),
         registerVendor
     )
