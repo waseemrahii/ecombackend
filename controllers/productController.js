@@ -170,64 +170,33 @@ const relatedModels = [{ model: Wishlist, foreignKey: 'products' }]
 // Delete a Product
 export const deleteProduct = deleteOneWithTransaction(Product, relatedModels)
 
-// update product
-// Add a new review to a product
-export const addReview = async (req, res) => {
-    try {
-        console.log('review ')
-        const productId = req.params.productId
-        const { customer: customerId, review, rating } = req.body
-
-        const product = await Product.findById(productId)
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' })
-        }
-
-        const customer = await Customer.findById(customerId)
-
-        if (!customer) {
-            return res.status(404).json({ message: 'Customer not found' })
-        }
-
-        product.reviews.push({
-            customer: customerId,
-            review,
-            rating,
-        })
-
-        console.log(product)
-
-        await product.save()
-        await client.del(`product_${productId}`)
-        sendSuccessResponse(res, product, 'Product Created Successfully')
-    } catch (error) {
-        sendErrorResponse(res, error)
-    }
-}
 // Update product status
 export const updateProductStatus = updateStatus(Product)
 
 // Update product featured status
-export const updateProductFeaturedStatus = async (req, res) => {
-    try {
+export const updateProductFeaturedStatus = catchAsync(
+    async (req, res, next) => {
         const productId = req.params.id
         const { isFeatured } = req.body
 
         const product = await Product.findById(productId)
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' })
+            return next(new AppError(`No product found`, 404))
         }
 
         product.isFeatured = isFeatured
         await product.save()
-        await client.del('all_products:*')
-        await client.del(`product_${productId}`)
-        sendSuccessResponse(res, product, 200)
-    } catch (error) {
-        sendErrorResponse(res, error)
-    }
-}
 
+        // Update cache
+        const cacheKey = getCacheKey('Product', '', req.query)
+        await redisClient.del(cacheKey)
+
+        res.status(200).json({
+            status: 'success',
+            doc: product,
+        })
+    }
+)
 // Get top-rated products
 export const getTopRatedProducts = async (req, res) => {
     try {
@@ -285,8 +254,13 @@ export const getLimitedStockedProducts = async (req, res) => {
 // Mark product as sold
 export const sellProduct = catchAsync(async (req, res) => {
     const productId = req.params.id
+
     const product = await Product.findById(productId)
-    re
+
+    if (!product) {
+        return next(new AppError(`No product found`, 404))
+    }
+
     product.status = 'sold'
 
     res.status(200).json({
