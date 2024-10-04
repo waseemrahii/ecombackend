@@ -16811,3 +16811,94 @@ Use mongoose.model(name, schema)
     at WriteStream.emit (node:events:530:35)
     at finish (node:internal/streams/writable:945:10)
     at node:internal/streams/writable:926:13
+2024-10-03T08:00:28.933Z [error]: Error: You are not logged in! Please log in to get access.
+    at file:///E:/MernStack/ecombackend/middleware/authMiddleware.js:45:13
+    at file:///E:/MernStack/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:175:3)
+2024-10-03T11:54:42.680Z [error]: Error: Invalid user type provided
+    at file:///E:/MernStack/ecombackend/controllers/adminWalletController.js:87:17
+    at file:///E:/MernStack/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:175:3)
+2024-10-03T11:55:29.874Z [error]: Error: Referenced vendor does not exist
+    at file:///E:/MernStack/ecombackend/controllers/adminWalletController.js:79:19
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-10-03T12:12:42.147Z [error]: ReferenceError: mongoose is not defined
+    at file:///E:/MernStack/ecombackend/controllers/adminWalletController.js:76:20
+    at file:///E:/MernStack/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:175:3)
+2024-10-03T12:12:53.860Z [error]: ReferenceError: mongoose is not defined
+    at file:///E:/MernStack/ecombackend/controllers/adminWalletController.js:76:20
+    at file:///E:/MernStack/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:175:3)
+2024-10-03T12:12:56.216Z [error]: ReferenceError: mongoose is not defined
+    at file:///E:/MernStack/ecombackend/controllers/adminWalletController.js:76:20
+    at file:///E:/MernStack/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:175:3)
+2024-10-03T12:15:16.674Z [error]: TypeError: Cannot read properties of undefined (reading 'userId')
+    at file:///E:/MernStack/ecombackend/controllers/adminWalletController.js:77:65
+    at file:///E:/MernStack/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:175:3)
+2024-10-03T12:18:43.083Z [error]: TypeError: Cannot read properties of undefined (reading 'userId')
+    at file:///E:/MernStack/ecombackend/controllers/adminWalletController.js:77:65
+    at file:///E:/MernStack/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:175:3)
+2024-10-03T12:19:35.679Z [error]: TypeError: Cannot read properties of undefined (reading 'ownerId')
+    at file:///E:/MernStack/ecombackend/controllers/adminWalletController.js:77:65
+    at file:///E:/MernStack/ecombackend/utils/catchAsync.js:2:2
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\MernStack\ecombackend\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\MernStack\ecombackend\node_modules\express\lib\router\layer.js:95:5)
+    at E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (E:\MernStack\ecombackend\node_modules\express\lib\router\index.js:175:3)
