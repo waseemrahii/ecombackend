@@ -1,32 +1,82 @@
 import Wishlist from '../models/wishlistModel.js'
 import Product from '../models/productModel.js'
 import Customer from '../models/customerModel.js'
-import { deleteOne, getAll, getOne } from './handleFactory.js'
+
+import { getAll } from './handleFactory.js'
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
 
+import { getCacheKey } from '../utils/helpers.js'
+import redisClient from '../config/redisConfig.js'
+
 export const getAllWishlists = getAll(Wishlist)
 
-export const deleteWishlist = deleteOne(Wishlist)
+export const deleteWishlist = catchAsync(async (req, res, next) => {
+    const { customerId } = req.params
+
+    const doc = await Model.findOneAndDelete({
+        customer: customerId,
+    }).exec()
+
+    // Handle case where the document was not found
+    if (!doc) {
+        return next(new AppError(`No wishlist found with that ID`, 404))
+    }
+
+    // get single document store in cache
+    const cacheKeyOne = getCacheKey('Wishlist', customerId)
+    await redisClient.del(cacheKeyOne)
+
+    // delete document caches
+    const cacheKey = getCacheKey('Wishlist', '', req.query)
+    await redisClient.del(cacheKey)
+
+    res.status(204).json({
+        status: 'success',
+        doc: null,
+    })
+})
 
 export const getWishlist = catchAsync(async (req, res, next) => {
     const { customerId } = req.params
 
-    const wishlist = await Wishlist.findOne({ customer: customerId })
+    const cacheKey = getCacheKey('Wishlist', customerId)
 
-    if (!wishlist) {
-        return next(new AppError('Customer not found.', 400))
+    // Check cache first
+    const cachedDoc = await redisClient.get(cacheKey)
+
+    if (cachedDoc) {
+        return res.status(200).json({
+            status: 'success',
+            cached: true,
+            doc: JSON.parse(cachedDoc),
+        })
     }
+
+    // If not in cache, fetch from database
+    const doc = await Wishlist.findOne({ customer: customerId })
+
+    if (!doc) {
+        return next(
+            new AppError(`No wishlist found with that customer ID.`, 404)
+        )
+    }
+
+    // Cache the result
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(doc))
 
     res.status(200).json({
         status: 'success',
-        doc: wishlist,
+        cached: false,
+        doc,
     })
 })
 
 export const addProductToWishlist = catchAsync(async (req, res, next) => {
     const { customerId, productId } = req.body
-    const customer = customerId;
+
+    const customer = customerId
+
     const productExists = await Product.findById(productId)
     if (!productExists) {
         return next(new AppError('Product not found.', 400))
@@ -59,7 +109,14 @@ export const addProductToWishlist = catchAsync(async (req, res, next) => {
 
     await wishlist.save()
 
-    console.log(wishlist)
+    // get single document store in cache
+    const cacheKeyOne = getCacheKey('Wishlist', customer)
+    await redisClient.del(cacheKeyOne)
+
+    // delete document caches
+    const cacheKey = getCacheKey('Wishlist', '', req.query)
+    await redisClient.del(cacheKey)
+
     res.status(200).json({
         status: 'success',
         doc: wishlist,
@@ -88,6 +145,14 @@ export const removeProductFromWishlist = catchAsync(async (req, res, next) => {
     wishlist.totalProducts = wishlist.products.length
 
     await wishlist.save()
+
+    // get single document store in cache
+    const cacheKeyOne = getCacheKey('Wishlist', customer)
+    await redisClient.del(cacheKeyOne)
+
+    // delete document caches
+    const cacheKey = getCacheKey('Wishlist', '', req.query)
+    await redisClient.del(cacheKey)
 
     res.status(200).json({
         status: 'success',

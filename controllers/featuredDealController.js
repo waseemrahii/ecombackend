@@ -36,7 +36,6 @@ export const addProductToFeaturedDeal = catchAsync(async (req, res, next) => {
     }
 
     const featuredDeal = await FeaturedDeal.findById(id)
-    console.log(featuredDeal)
 
     if (!featuredDeal) {
         return next(new AppError('Feature Deal not found', 404))

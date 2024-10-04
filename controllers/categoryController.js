@@ -1,31 +1,25 @@
 import Category from '../models/categoryModel.js'
-import {
-    sendErrorResponse,
-    sendSuccessResponse,
-} from '../utils/responseHandler.js'
-import fs from 'fs'
-import path from 'path'
 import slugify from 'slugify'
-import { client } from '../utils/redisClient.js'
 import {
-    deleteOne,
     deleteOneWithTransaction,
     getAll,
     getOne,
     getOneBySlug,
+    updateOne,
+    updateStatus,
 } from './handleFactory.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getCacheKey } from '../utils/helpers.js'
 import redisClient from '../config/redisConfig.js'
+
 import SubCategory from '../models/subCategoryModel.js'
 import SubSubCategory from '../models/subSubCategoryModel.js'
 import Product from '../models/productModel.js'
 
 // Create a new category
 export const createCategory = catchAsync(async (req, res) => {
-    const { name, priority } = req.body
-    console.log(req.file)
-    const logo = req.file ? req.file.filename : null
+    const { name, priority, logo } = req.body
+
     const slug = slugify(name, { lower: true })
 
     const category = new Category({ name, logo, priority, slug })
@@ -50,29 +44,6 @@ export const createCategory = catchAsync(async (req, res) => {
         doc: category,
     })
 })
-// Get all categories with optional search functionality
-// export const getCategories = async (req, res) => {
-//     try {
-//         const { search } = req.query;
-
-//         const cacheKey = search ? `categories_search_${search}` : 'categories';
-
-//         const cachedCategories = await client.get(cacheKey);
-//         if (cachedCategories) {
-//             console.log('Serving categories from cache');
-//             return sendSuccessResponse(res, JSON.parse(cachedCategories), "Categories fetched successfully");
-//         }
-//         const query = search ? { name: { $regex: search, $options: 'i' } } : {};
-
-//         const categories = await Category.find(query);
-
-//         await client.set(cacheKey, JSON.stringify(categories));
-
-//         sendSuccessResponse(res, categories, "Categories fetched successfully");
-//     } catch (error) {
-//         sendErrorResponse(res, error.message);
-//     }
-// };
 
 export const getCategories = getAll(Category, {
     path: [
@@ -92,32 +63,7 @@ export const getCategories = getAll(Category, {
 export const getCategoryById = getOne(Category)
 
 // Update a category by ID
-export const updateCategory = catchAsync(async (req, res) => {
-    const { name, priority } = req.body
-    const logo = req.file ? req.file.filename : req.body.logo
-    const slug = slugify(name, { lower: true })
-
-    const category = await Category.findByIdAndUpdate(
-        req.params.id,
-        { name, logo, priority, slug },
-        {
-            new: true,
-            runValidators: true,
-        }
-    )
-
-    if (!category) {
-        return next(new AppError(`No category found with that Id.`, 404))
-    }
-
-    await client.del(`category_${req.params.id}`)
-    await client.del('categories')
-
-    res.status(200).json({
-        status: 'success',
-        doc: category,
-    })
-})
+export const updateCategory = updateOne(Category)
 // Delete a category by ID
 // Define related models and their foreign keys
 const relatedModels = [
@@ -131,3 +77,5 @@ export const deleteCategory = deleteOneWithTransaction(Category, relatedModels)
 
 // Get category by slug
 export const getCategoryBySlug = getOneBySlug(Category)
+
+export const updateCategoryStatus = updateStatus(Category)

@@ -1,4 +1,3 @@
-import logger from '../utils/logger.js' // Import your Winston logger
 import AppError from './../utils/appError.js'
 
 const NODE_ENV = process.env.NODE_ENV || 'production'
@@ -32,8 +31,6 @@ const handleJWTExpiredError = () =>
 
 const sendErrorDev = (err, res) => {
     // Log the error
-    logger.error(err.stack)
-
     res.status(err.statusCode).json({
         status: err.status,
         error: err,

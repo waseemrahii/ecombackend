@@ -90,6 +90,23 @@ const couponSchema = new mongoose.Schema(
     }
 )
 
+couponSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'products',
+        select: 'name price',
+    })
+        .populate({
+            path: 'vendors',
+            select: 'shopName',
+        })
+        .populate({
+            path: 'customers',
+            select: 'firstName lastName',
+        })
+
+    next()
+})
+
 couponSchema.pre('save', async function (next) {
     try {
         // Check if vendors are provided and validate them
@@ -124,15 +141,6 @@ couponSchema.pre('save', async function (next) {
         next(err)
     }
 })
-
-// Pre middleware to populate applicableProducts, applicableVendors,
-// and applicableCustomers before any find operation
-// couponSchema.pre(/^find/, function (next) {
-//     this.populate('applicableProducts')
-//         .populate('applicableVendors')
-//         .populate('applicableCustomers')
-//     next()
-// })
 
 const Coupon = mongoose.model('Coupon', couponSchema)
 

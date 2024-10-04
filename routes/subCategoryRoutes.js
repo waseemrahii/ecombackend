@@ -6,10 +6,10 @@ import {
     getSubCategoryBySlug,
     updateSubCategoryById,
     deleteSubCategoryById,
-    getSubCategoriesByMainCategorySlug,
 } from '../controllers/subCategoryController.js'
 import { validateSchema } from '../middleware/validationMiddleware.js'
 import subCategoryValidationSchema from './../validations/subCateogoryValidator.js'
+import { protect, restrictTo } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
@@ -21,12 +21,9 @@ router
 router
     .route('/:id')
     .get(getSubCategoryById)
-    .put(updateSubCategoryById)
-    .delete(deleteSubCategoryById)
+    .put(protect, restrictTo('admin'), updateSubCategoryById)
+    .delete(protect, restrictTo('admin'), deleteSubCategoryById)
 
 router.route('/slug/:slug').get(getSubCategoryBySlug)
-
-// New route for getting subcategories by main category slug
-router.route('/main-category/:slug').get(getSubCategoriesByMainCategorySlug)
 
 export default router

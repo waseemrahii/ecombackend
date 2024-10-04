@@ -13,37 +13,16 @@ import {
 } from '../controllers/flashDealController.js'
 import { validateSchema } from '../middleware/validationMiddleware.js'
 import flashDealValidationSchema from './../validations/flashDealValidator.js'
+import { protect, restrictTo } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
-
-// Set up multer for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`)
-    },
-})
-
-const upload = multer({
-    storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit
-})
-
-// Middleware to log file uploads
-router.use((req, res, next) => {
-    if (req.file) {
-        console.log('Uploaded file:', req.file)
-    }
-    next()
-})
 
 router
     .route('/')
     .post(
-        upload.single('image'),
-        // validateSchema(flashDealValidationSchema),
+        protect,
+        restrictTo('admin'),
+        validateSchema(flashDealValidationSchema),
         createFlashDeal
     )
     .get(getFlashDeals)
@@ -51,17 +30,19 @@ router
 router
     .route('/:id')
     .get(getFlashDealById)
-    .put(upload.single('image'), updateFlashDeal)
-    .delete(deleteFlashDeal)
-
-router.route('/add-product/:flashDealId').put(addProductToFlashDeal)
+    .put(protect, restrictTo('admin'), updateFlashDeal)
+    .delete(protect, restrictTo('admin'), deleteFlashDeal)
 
 router
-    .route('/:flashDealId/remove-product/:productId')
-    .put(removeProductFromFlashDeal)
+    .route('/:id/add-product')
+    .put(protect, restrictTo('admin'), addProductToFlashDeal)
 
-router.route('/:id/status').patch(updateFlashDealStatus)
+router
+    .route('/:id/remove-product')
+    .put(protect, restrictTo('admin'), removeProductFromFlashDeal)
 
-router.route('/:id/update-publish').patch(updatePublishStatus)
+router.route('/:id/status').put(updateFlashDealStatus)
+
+router.route('/:id/publish').put(updatePublishStatus)
 
 export default router

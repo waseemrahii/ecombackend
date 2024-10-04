@@ -11,12 +11,6 @@ const flashDealValidationSchema = Joi.object({
         'string.empty': 'Image cannot be empty.',
         'any.required': 'Please provide image.',
     }),
-    products: Joi.array().items(
-        Joi.string().required().messages({
-            'any.required': 'Product ID is required',
-            'string.base': 'Product ID must be a string',
-        })
-    ),
     startDate: Joi.date().required().messages({
         'any.required': 'Please provide start date.',
         'date.base': 'Start date must be a valid date.',
@@ -26,14 +20,6 @@ const flashDealValidationSchema = Joi.object({
         'date.base': 'End date must be a valid date.',
         'date.greater': 'End date must be later than start date.',
     }),
-    status: Joi.string()
-        .valid('active', 'expired', 'inactive')
-        .default('inactive')
-        .messages({
-            'string.valid':
-                'Status must be one of [active, expired, inactive].',
-        }),
-    publish: Joi.boolean().default(false),
 })
 
 export default flashDealValidationSchema

@@ -1,10 +1,16 @@
 import redisClient from '../config/redisConfig.js'
 import Coupon from '../models/couponModel.js'
 import Order from '../models/orderModel.js'
+import Refund from '../models/refundModel.js'
 import AppError from '../utils/appError.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getCacheKey } from '../utils/helpers.js'
-import { deleteOne, getAll, getOne, updateStatus } from './handleFactory.js'
+import {
+    deleteOneWithTransaction,
+    getAll,
+    getOne,
+    updateStatus,
+} from './handleFactory.js'
 
 const updateCouponUserLimit = catchAsync(async (_couponId, next) => {
     // Find the coupon by ID
@@ -81,7 +87,10 @@ export const createOrder = catchAsync(async (req, res, next) => {
 
 export const getAllOrders = getAll(Order)
 // Delete an order
-export const deleteOrder = deleteOne(Order)
+
+const relatedModels = [{ model: Refund, foreignKey: 'order' }]
+
+export const deleteOrder = deleteOneWithTransaction(Order, relatedModels)
 
 // Get order by ID
 export const getOrderById = getOne(Order)
@@ -92,8 +101,8 @@ export const updateOrderStatus = updateStatus(Order)
 export const getOrderByCustomer = catchAsync(async (req, res, next) => {
     const customerId = req.params.customerId
 
-    const cacheKey = getCacheKey('Order', customerId)
     // Check cache first
+    const cacheKey = getCacheKey('Order', customerId)
     const cachedDoc = await redisClient.get(cacheKey)
 
     if (cachedDoc) {

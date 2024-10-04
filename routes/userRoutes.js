@@ -39,7 +39,7 @@ router
         // validateSchema(userValidationSchema),
         createUser
     )
-    .get(getUsers)
+    .get(protect, restrictTo('admin', 'vendor'), getUsers)
 
 router
     .route('/:id')

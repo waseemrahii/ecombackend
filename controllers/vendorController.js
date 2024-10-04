@@ -1,9 +1,7 @@
-import Vendor from '../models/vendorModel.js'
-import {
-    sendSuccessResponse,
-    sendErrorResponse,
-} from '../utils/responseHandler.js'
+import redisClient from '../config/redisConfig.js'
 
+import Product from '../models/productModel.js'
+import Vendor from '../models/vendorModel.js'
 import {
     deleteOneWithTransaction,
     getAll,
@@ -13,56 +11,6 @@ import {
 import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
 import { getCacheKey } from '../utils/helpers.js'
-import redisClient from '../config/redisConfig.js'
-import Product from '../models/productModel.js'
-
-// Create a new vendor
-export const createVendor = async (req, res) => {
-    try {
-        const {
-            firstName,
-            lastName,
-            phoneNumber,
-            email,
-            password,
-            shopName,
-            address,
-        } = req.body
-
-        const vendorImage = req.files['vendorImage']
-            ? req.files['vendorImage'][0].path
-            : null
-        const logo = req.files['logo'] ? req.files['logo'][0].path : null
-        const banner = req.files['banner'] ? req.files['banner'][0].path : null
-
-        const vendor = new Vendor({
-            firstName,
-            lastName,
-            phoneNumber,
-            email,
-            password,
-            shopName,
-            address,
-            vendorImage,
-            logo,
-            banner,
-            status: 'pending', // Set default status to pending
-        })
-
-        const savedVendor = await vendor.save()
-        if (savedVendor) {
-            const cacheKey = `vendor:${savedVendor._id}`
-            await client.set(cacheKey, JSON.stringify(savedVendor))
-            await client.del('all_vendors')
-
-            sendSuccessResponse(res, savedVendor, 'Vendor added successfully')
-        } else {
-            throw new Error('Vendor could not be created')
-        }
-    } catch (error) {
-        sendErrorResponse(res, error)
-    }
-}
 
 // Vendor registration (similar to createVendor but may have different logic)
 export const registerVendor = catchAsync(async (req, res) => {
@@ -75,12 +23,13 @@ export const registerVendor = catchAsync(async (req, res) => {
         shopName,
         address,
     } = req.body
+    const { vendorImage, logo, banner } = req.body
 
-    const vendorImage = req.files['vendorImage']
-        ? req.files['vendorImage'][0].path
-        : null
-    const logo = req.files['logo'] ? req.files['logo'][0].path : null
-    const banner = req.files['banner'] ? req.files['banner'][0].path : null
+    // const vendorImage = req.files['vendorImage']
+    //     ? req.files['vendorImage'][0].path
+    //     : null
+    // const logo = req.files['logo'] ? req.files['logo'][0].path : null
+    // const banner = req.files['banner'] ? req.files['banner'][0].path : null
 
     const newVendor = new Vendor({
         firstName,

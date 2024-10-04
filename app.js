@@ -37,11 +37,11 @@ const app = express()
 
 app.use(
     cors({
-        origin: '*',  // Allows all origins, but only for testing
+        origin: '*', // Allows all origins, but only for testing
         methods: 'GET,POST,PUT,DELETE',
         credentials: true,
     })
-);
+)
 
 // Global input sanitization middleware
 app.use(express.json())
@@ -62,32 +62,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // API ROUTES
 app.use('/api', routes)
-// app.use('/api/users', userRoutes)
-// app.use('/api/vendors', vendorRoutes)
-// app.use('/api/vendor-banks', vendorBankRoutes)
-// app.use('/api/customers', customerRoutes)
-
-// app.use('/api/products', productRoutes)
-// app.use('/api/brands', brandsRoutes)
-// app.use('/api/categories', categoryRoutes)
-// app.use('/api/sub-categories', subCategoryRoutes)
-// app.use('/api/sub-sub-categories', subSubCategoryRoutes)
-// app.use('/api/attributes', attributeRoutes)
-// app.use('/api/colors', colorRoutes)
-// app.use('/api/reviews', reviewRoutes)
-
-// app.use('/api/orders', oderRoutes)
-// app.use('/api/wishlists', whishlist)
-// app.use('/api/refunds', refundRoutes)
-
-// app.use('/api/banners', banner)
-// app.use('/api/notifications', notification)
-// app.use('/api/flash-deals', flashDeal)
-// app.use('/api/deal-of-day', dealOfDay)
-// app.use('/api/featured-deals', featureddeal)
-// app.use('/api/coupons', coupons)
-// app.use('/api/subscribers', subscriber)
-// app.use('/api/search', searchRoutes)
 
 // Clear all caches
 app.post('/api/clean-cache', cleanCache)

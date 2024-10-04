@@ -1,10 +1,7 @@
+import mongoose from 'mongoose'
+
 import Product from '../models/productModel.js'
 import catchAsync from '../utils/catchAsync.js'
-import {
-    sendErrorResponse,
-    sendSuccessResponse,
-} from '../utils/responseHandler.js'
-import Customer from '../models/customerModel.js'
 import {
     deleteOneWithTransaction,
     getAll,
@@ -15,7 +12,6 @@ import {
 import { getCacheKey } from '../utils/helpers.js'
 import redisClient from '../config/redisConfig.js'
 import slugify from 'slugify'
-import mongoose from 'mongoose'
 import AppError from '../utils/appError.js'
 import Wishlist from '../models/wishlistModel.js'
 
@@ -52,12 +48,14 @@ export const createProduct = catchAsync(async (req, res, next) => {
     } = req.body
 
     if (userType === 'vendor') {
-        const vendor = await mongoose.model('Vendor').findById(this.userId)
+        const vendor = await mongoose.model('Vendor').findById(userId)
+
         if (!vendor) {
             return next(new AppError('Referenced vendor does not exist', 400))
         }
     } else if (userType === 'admin') {
-        const user = await mongoose.model('User').findById(this.userId)
+        const user = await mongoose.model('User').findById(userId)
+
         if (!user) {
             return next(new AppError('Referenced user does not exist', 400))
         }
@@ -101,12 +99,8 @@ export const createProduct = catchAsync(async (req, res, next) => {
         videoLink,
         userId,
         userType,
-        thumbnail: req.files['thumbnail']
-            ? req.files['thumbnail'][0].path
-            : undefined,
-        images: req.files['images']
-            ? req.files['images'].map((file) => file.path)
-            : [],
+        thumbnail,
+        images,
         slug: slugify(name, { lower: true }),
     })
     await newProduct.save()
@@ -170,123 +164,44 @@ const relatedModels = [{ model: Wishlist, foreignKey: 'products' }]
 // Delete a Product
 export const deleteProduct = deleteOneWithTransaction(Product, relatedModels)
 
-// update product
-// Add a new review to a product
-export const addReview = async (req, res) => {
-    try {
-        console.log('review ')
-        const productId = req.params.productId
-        const { customer: customerId, review, rating } = req.body
-
-        const product = await Product.findById(productId)
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' })
-        }
-
-        const customer = await Customer.findById(customerId)
-
-        if (!customer) {
-            return res.status(404).json({ message: 'Customer not found' })
-        }
-
-        product.reviews.push({
-            customer: customerId,
-            review,
-            rating,
-        })
-
-        console.log(product)
-
-        await product.save()
-        await client.del(`product_${productId}`)
-        sendSuccessResponse(res, product, 'Product Created Successfully')
-    } catch (error) {
-        sendErrorResponse(res, error)
-    }
-}
 // Update product status
 export const updateProductStatus = updateStatus(Product)
 
 // Update product featured status
-export const updateProductFeaturedStatus = async (req, res) => {
-    try {
+export const updateProductFeaturedStatus = catchAsync(
+    async (req, res, next) => {
         const productId = req.params.id
         const { isFeatured } = req.body
 
         const product = await Product.findById(productId)
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' })
+            return next(new AppError(`No product found`, 404))
         }
 
         product.isFeatured = isFeatured
         await product.save()
-        await client.del('all_products:*')
-        await client.del(`product_${productId}`)
-        sendSuccessResponse(res, product, 200)
-    } catch (error) {
-        sendErrorResponse(res, error)
-    }
-}
 
-// Get top-rated products
-export const getTopRatedProducts = async (req, res) => {
-    try {
-        const topRatedProducts = await Product.aggregate([
-            { $match: { status: 'active' } },
-            { $unwind: '$reviews' },
-            {
-                $group: {
-                    _id: '$_id',
-                    name: { $first: '$name' },
-                    averageRating: { $avg: '$reviews.rating' },
-                },
-            },
-            { $sort: { averageRating: -1 } },
-            { $limit: 10 },
-        ])
+        // Update cache
+        const cacheKey = getCacheKey('Product', '', req.query)
+        await redisClient.del(cacheKey)
 
-        sendSuccessResponse(res, 200, topRatedProducts)
-    } catch (error) {
-        sendErrorResponse(res, error)
-    }
-}
-
-// Get products with limited stock
-export const getLimitedStockedProducts = async (req, res) => {
-    try {
-        const limitThreshold = 10
-        const cacheKey = 'limited_stocked_products'
-        const cachedProducts = await client.get(cacheKey)
-
-        if (cachedProducts) {
-            return sendSuccessResponse(res, 200, JSON.parse(cachedProducts))
-        }
-
-        const limitedStockedProducts = await Product.find({
-            stock: { $lte: limitThreshold },
-            status: 'active',
+        res.status(200).json({
+            status: 'success',
+            doc: product,
         })
-            .populate('category', 'name')
-            .populate('subCategory', 'name')
-            .populate('brand', 'name')
-
-        await client.set(
-            cacheKey,
-            JSON.stringify(limitedStockedProducts),
-            'EX',
-            3600
-        ) // Cache for 1 hour
-        sendSuccessResponse(res, limitedStockedProducts, 200)
-    } catch (error) {
-        sendErrorResponse(res, error)
     }
-}
+)
 
 // Mark product as sold
 export const sellProduct = catchAsync(async (req, res) => {
     const productId = req.params.id
+
     const product = await Product.findById(productId)
-    re
+
+    if (!product) {
+        return next(new AppError(`No product found with that ID.`, 404))
+    }
+
     product.status = 'sold'
 
     res.status(200).json({
@@ -385,38 +300,5 @@ export const updateProduct = catchAsync(async (req, res) => {
     res.status(200).json({
         status: 'success',
         doc: updatedProduct,
-    })
-})
-
-export const searchProducts = catchAsync(async (req, res, next) => {
-    const { query, page = 1, limit = 10 } = req.query
-
-    // Construct regex for case-insensitive partial matching
-    const searchQuery = {
-        $or: [
-            { name: { $regex: query, $options: 'i' } }, // Case-insensitive search in 'name'
-            { description: { $regex: query, $options: 'i' } }, // Case-insensitive search in 'description'
-        ],
-    }
-
-    // Fetch products with pagination
-    const products = await Product.find(searchQuery)
-        .skip((page - 1) * limit)
-        .limit(parseInt(limit))
-
-    // Check if products were found
-    if (products.length === 0) {
-        return next(new AppError(`No product found`, 404))
-    }
-
-    // Get total product count
-    const total = await Product.countDocuments(searchQuery)
-
-    res.status(200).json({
-        status: 'success',
-        results: products.length,
-        doc: products,
-        totalPages: Math.ceil(total / limit),
-        currentPage: parseInt(page),
     })
 })

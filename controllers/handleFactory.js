@@ -4,6 +4,7 @@ import APIFeatures from '../utils/apiFeatures.js'
 import AppError from '../utils/appError.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getCacheKey } from '../utils/helpers.js'
+import mongoose from 'mongoose'
 
 // Check Document fields if they exisit it return data body
 // And if not it return Error
@@ -189,17 +190,12 @@ export const getOne = (Model, popOptions) =>
 // GET All Documents
 export const getAll = (Model, popOptions) =>
     catchAsync(async (req, res, next) => {
-        console.log('GET ALL', Model)
-
         const cacheKey = getCacheKey(Model.modelName, '', req.query)
-
-        console.log(cacheKey)
 
         // Check cache first
         const cacheddoc = await redisClient.get(cacheKey)
 
         if (cacheddoc !== null) {
-            console.log('cached')
             return res.status(200).json({
                 status: 'success',
                 cached: true,
@@ -231,8 +227,6 @@ export const getAll = (Model, popOptions) =>
 
         const doc = await features.query
 
-        console.log(doc)
-
         // Cache the result
         await redisClient.setEx(cacheKey, 3600, JSON.stringify(doc))
 
@@ -261,8 +255,6 @@ export const getOneBySlug = (Model, popOptions) =>
 
         // If not in cache, fetch from database
         let query = Model.findOne({ slug: req.params.slug })
-
-        console.log(query)
 
         if (popOptions && popOptions?.path) query = query.populate(popOptions)
         const doc = await query
@@ -319,6 +311,13 @@ export const deleteOneWithTransaction = (Model, relatedModels = []) =>
             // Commit the transaction
             await session.commitTransaction()
             session.endSession()
+
+            const cacheKeyOne = getCacheKey(Model.modelName, req.params.id)
+            await redisClient.del(cacheKeyOne)
+
+            // Update cache
+            const cacheKey = getCacheKey(Model.modelName, '', req.query)
+            await redisClient.del(cacheKey)
 
             res.status(204).json({
                 status: 'success',
