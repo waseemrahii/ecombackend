@@ -1,16 +1,17 @@
 import Category from '../models/categoryModel.js'
 import slugify from 'slugify'
-import { client } from '../utils/redisClient.js'
 import {
     deleteOneWithTransaction,
     getAll,
     getOne,
     getOneBySlug,
+    updateOne,
     updateStatus,
 } from './handleFactory.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getCacheKey } from '../utils/helpers.js'
 import redisClient from '../config/redisConfig.js'
+
 import SubCategory from '../models/subCategoryModel.js'
 import SubSubCategory from '../models/subSubCategoryModel.js'
 import Product from '../models/productModel.js'
@@ -62,32 +63,7 @@ export const getCategories = getAll(Category, {
 export const getCategoryById = getOne(Category)
 
 // Update a category by ID
-export const updateCategory = catchAsync(async (req, res) => {
-    const { name, priority, logo } = req.body
-    // const logo = req.file ? req.file.filename : req.body.logo
-    const slug = slugify(name, { lower: true })
-
-    const category = await Category.findByIdAndUpdate(
-        req.params.id,
-        { name, logo, priority, slug },
-        {
-            new: true,
-            runValidators: true,
-        }
-    )
-
-    if (!category) {
-        return next(new AppError(`No category found with that Id.`, 404))
-    }
-
-    await client.del(`category_${req.params.id}`)
-    await client.del('categories')
-
-    res.status(200).json({
-        status: 'success',
-        doc: category,
-    })
-})
+export const updateCategory = updateOne(Category)
 // Delete a category by ID
 // Define related models and their foreign keys
 const relatedModels = [

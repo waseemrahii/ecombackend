@@ -3,8 +3,6 @@ import redisClient from '../config/redisConfig.js'
 import Brand from '../models/brandModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getCacheKey } from '../utils/helpers.js'
-import { client } from '../utils/redisClient.js'
-import { sendSuccessResponse } from '../utils/responseHandler.js'
 import {
     deleteOne,
     getAll,

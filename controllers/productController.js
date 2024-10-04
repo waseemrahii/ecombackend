@@ -1,10 +1,7 @@
+import mongoose from 'mongoose'
+
 import Product from '../models/productModel.js'
 import catchAsync from '../utils/catchAsync.js'
-import {
-    sendErrorResponse,
-    sendSuccessResponse,
-} from '../utils/responseHandler.js'
-import Customer from '../models/customerModel.js'
 import {
     deleteOneWithTransaction,
     getAll,
@@ -15,7 +12,6 @@ import {
 import { getCacheKey } from '../utils/helpers.js'
 import redisClient from '../config/redisConfig.js'
 import slugify from 'slugify'
-import mongoose from 'mongoose'
 import AppError from '../utils/appError.js'
 import Wishlist from '../models/wishlistModel.js'
 
