@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import catchAsync from '../utils/catchAsync.js'
 import AppError from '../utils/appError.js'
 
 const orderSchema = new mongoose.Schema(

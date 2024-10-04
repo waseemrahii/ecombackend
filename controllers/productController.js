@@ -48,13 +48,13 @@ export const createProduct = catchAsync(async (req, res, next) => {
     } = req.body
 
     if (userType === 'vendor') {
-        const vendor = await mongoose.model('Vendor').findById(this.userId)
+        const vendor = await mongoose.model('Vendor').findById(userId)
 
         if (!vendor) {
             return next(new AppError('Referenced vendor does not exist', 400))
         }
     } else if (userType === 'admin') {
-        const user = await mongoose.model('User').findById(this.userId)
+        const user = await mongoose.model('User').findById(userId)
 
         if (!user) {
             return next(new AppError('Referenced user does not exist', 400))
