@@ -8,17 +8,23 @@ import {
     updateDealOfTheDay,
     deleteDealOfTheDay,
 } from '../controllers/dealOfTheDayController.js'
+import { protect, restrictTo } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 router
     .route('/')
-    .post(validateSchema(dealOfTheDayValidationSchema), createDealOfTheDay)
-    .get(getAllDealsOfTheDay)
+    .post(
+        protect,
+        restrictTo('admin', 'vendor'),
+        validateSchema(dealOfTheDayValidationSchema),
+        createDealOfTheDay
+    )
+    .get(protect, getAllDealsOfTheDay)
 
 router
     .route('/:id')
     .get(getDealOfTheDayById)
-    .put(updateDealOfTheDay)
-    .delete(deleteDealOfTheDay)
+    .put(protect, restrictTo('admin', 'vendor'), updateDealOfTheDay)
+    .delete(protect, restrictTo('admin', 'vendor'), deleteDealOfTheDay)
 
 export default router

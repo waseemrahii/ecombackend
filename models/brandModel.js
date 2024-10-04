@@ -23,7 +23,6 @@ const brandSchema = new mongoose.Schema(
             enum: ['active', 'inactive'],
             default: 'inactive',
         },
-
         slug: String,
     },
     {

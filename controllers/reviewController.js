@@ -18,14 +18,10 @@ export const createProductReview = catchAsync(async (req, res, next) => {
     const { productId, review, rating } = req.body
     const userId = req.user._id
 
-    console.log(userId)
-
     const existingReview = await ProductReview.findOne({
         product: productId,
         customer: userId,
     })
-
-    console.log(existingReview)
 
     if (existingReview) {
         return next(

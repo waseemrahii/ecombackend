@@ -1,6 +1,4 @@
 import express from 'express'
-import multer from 'multer'
-import path from 'path'
 import {
     getAllNotifications,
     getNotificationById,
@@ -10,16 +8,19 @@ import {
     searchNotifications,
     incrementNotificationCount,
 } from '../controllers/notificationController.js'
+
 import { validateSchema } from '../middleware/validationMiddleware.js'
 import notificationValidationSchema from './../validations/notificationValidator.js'
-
+import { protect, restrictTo } from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
 router
     .route('/')
-    .get(getAllNotifications)
+    .get(protect, getAllNotifications)
     .post(
+        protect,
+        restrictTo('admin'),
         validateSchema(notificationValidationSchema),
         createNotification
     )
@@ -29,9 +30,11 @@ router.route('/search').get(searchNotifications)
 router
     .route('/:id')
     .get(getNotificationById)
-    .put(updateNotification)
-    .delete(deleteNotification)
+    .put(protect, updateNotification)
+    .delete(protect, deleteNotification)
 
-router.route('/:id/increment').put(incrementNotificationCount)
+router
+    .route('/:id/increment')
+    .put(protect, restrictTo('admin'), incrementNotificationCount)
 
 export default router

@@ -20,7 +20,7 @@ router
 router.route('/:id').get(protect, getRefundById).delete(protect, deleteRefund)
 
 router.put(
-    '/:id/status',
+    '/status/:id',
     protect,
     restrictTo('admin', 'vendor'),
     updateRefundStatus

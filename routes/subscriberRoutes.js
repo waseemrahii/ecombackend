@@ -15,6 +15,6 @@ router
     .get(protect, restrictTo('admin'), getSubscribers)
     .post(validateSchema(subscriberValidationSchema), addSubscriber)
 
-router.route('/:id').delete(protect, deleteSubscriber)
+router.route('/:id').delete(protect, restrictTo('admin'), deleteSubscriber)
 
 export default router
