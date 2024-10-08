@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import AppError from './../utils/appError.js'
 
 const couponSchema = new mongoose.Schema(
     {
@@ -16,10 +17,10 @@ const couponSchema = new mongoose.Schema(
         type: {
             type: String,
             enum: [
-                'Discount on Purchase',
-                'Free Delivery',
-                'Buy One Get One',
-                'Others',
+                'discount-on-purchase',
+                'free-delivery',
+                'buy-one-get-one',
+                'others',
             ],
             required: [true, 'Please provide type.'],
         },

@@ -4,6 +4,7 @@ import Brand from '../models/brandModel.js'
 import catchAsync from '../utils/catchAsync.js'
 import { getCacheKey } from '../utils/helpers.js'
 import {
+    createOne,
     deleteOne,
     getAll,
     getOne,
@@ -12,37 +13,7 @@ import {
 } from './handleFactory.js'
 
 // Create a new brand
-export const createBrand = catchAsync(async (req, res) => {
-    const { name, imageAltText, logo } = req.body
-
-    const brand = new Brand({
-        name,
-        logo,
-        imageAltText,
-        slug: slugify(name, { lower: true }),
-    })
-
-    await brand.save()
-
-    if (!brand) {
-        return res.status(400).json({
-            status: 'fail',
-            message: `Brand could not be created`,
-        })
-    }
-
-    const cacheKeyOne = getCacheKey('Brand', brand?._id)
-    await redisClient.setEx(cacheKeyOne, 3600, JSON.stringify(brand))
-
-    // delete all documents caches related to this model
-    const cacheKey = getCacheKey('Brand', '', req.query)
-    await redisClient.del(cacheKey)
-
-    res.status(201).json({
-        status: 'success',
-        doc: brand,
-    })
-})
+export const createBrand = createOne(Brand)
 
 export const getBrands = getAll(Brand, { path: 'productCount' })
 
