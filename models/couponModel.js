@@ -93,17 +93,12 @@ const couponSchema = new mongoose.Schema(
 
 couponSchema.pre(/^find/, function (next) {
     this.populate({
-        path: 'products',
-        select: 'name price',
+        path: 'vendors',
+        select: 'shopName',
+    }).populate({
+        path: 'customers',
+        select: 'firstName lastName',
     })
-        .populate({
-            path: 'vendors',
-            select: 'shopName',
-        })
-        .populate({
-            path: 'customers',
-            select: 'firstName lastName',
-        })
 
     next()
 })
